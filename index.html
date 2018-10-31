@@ -392,8 +392,7 @@
 
       
         
-          
-            <ul>
+          <ul>
 <li>“在不同时间指向不同对象”用指针pointer</li>
 <li>“总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。</li>
 <li>reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。</li>
@@ -415,34 +414,14 @@
 </li>
 <li><p>如果返回的对象不是const的话，就可以像上述代码一样进行2次后置自增操作（显然int 不允许连续两次使用后置式increment操作符）。另外第二个operator++所改变的对象是第一个operator++返回的对象，而不是原对象，故i只完成了一次自增操作，容易引起混淆。</p>
 </li>
-<li>在效率问题上，后置式必须产生一个临时对象，需要构造也需要析构。前置式就没有如此的临时对象。故处理用户定制数据类型时，应该尽可能的使用前置式。</li>
-</ul>
-<h3 id="千万不要重载-amp-amp-和-操作符"><a href="#千万不要重载-amp-amp-和-操作符" class="headerlink" title="千万不要重载&amp;&amp;, || 和, 操作符"></a>千万不要重载&amp;&amp;, || 和, 操作符</h3><ul>
-<li><p>和C一样，C++对于“真假值表达式”采用“骤死式”评估方式。即，一旦该表达式的真假值确定，即使未完全检验，整个过程就结束了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char *p;</span><br><span class="line">...</span><br><span class="line">if((p! = 0) &amp;&amp; (strlen(p) &gt; 10)) ....</span><br><span class="line">//只要p为null，就不会调用strlen</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果重载&amp;&amp;和||操作符，“函数调用 语义”会取代“骤死式 语义”。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//如果对operator&amp;&amp;进行重载</span><br><span class="line">if(expression1 &amp;&amp; expression2) ...</span><br><span class="line">会被编译器视为以下两者之一：</span><br><span class="line"></span><br><span class="line">if(expression1.operator&amp;&amp;(expression2))</span><br><span class="line">//假设operator&amp;&amp;是个成员函数</span><br><span class="line">if(operator&amp;&amp;(expression1,expression2))</span><br><span class="line">//operator&amp;&amp;是个全局函数</span><br><span class="line">//注意如果需要用到私有成员 需使用友元</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>也就是说函数调用 不存在什么骤死式语义。</p>
-</li>
-<li>有所谓的==逗号操作符==吗？ 有的</li>
-<li>C++有一些规则来定义&amp;&amp;和||面对内建类型的行为，同样也有一些规则来定义逗号操作符面对内建类型的行为。</li>
-<li>表达式如果内含逗号，那么逗号左侧会先被评估，然后逗号的右侧再被评估；最后整个逗号表达式的结果以 ==++逗号右侧的值++== 为代表。</li>
-<li>对于非成员函数，无法保证作为表达式一定比右侧先评估，因为两个表达式都被当做函数调用时的自变量，无法控制一个函数的自变量评估顺序。</li>
-<li>对于成员函数，因为编译器并不强迫做这样的事情，因此不要轻率的将逗号重载。</li>
-</ul>
-<h3 id="了解各种不同意义的new和delete"><a href="#了解各种不同意义的new和delete" class="headerlink" title="了解各种不同意义的new和delete"></a>了解各种不同意义的new和delete</h3><ul>
-<li><p>请说明new operator 和operator new之间的差异</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string *ps = new string(&quot;Memory Management&quot;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>此处的new 是所谓的new operator。这个操作符是由语言内建的，不能被改变意义，总是做相同的事情，即，第一、分配足够的内存。第二、它调用了一个构造函数（constructor），为分配的内存中的对象设定初始值（初始化）。</p>
-</li>
-<li>而operator new则是跟malloc一样，唯一的任务就是分配内存，它不知道什么是构造函数（constructors），operator new 只负责内存分配。取得operator new返回的内存并将之转换为一个对象,是new operator的责任。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//函数 operator new 通常声明如下：</span><br><span class="line">void * operator new(size_t size);</span><br><span class="line">//此函数返回一个指针，指向一块原始的、未设初值的内存</span><br><span class="line"></span><br><span class="line">//函数调用</span><br><span class="line">void *rawMemory = operator new(sizeof(string));</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-          
+<li><p>在效率问题上，后置式必须产生一个临时对象，需要构造也需要析构。前置式就没有如此的临时对象。故处理用户定制数据类型时，应该尽可能的使用前置式。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/10/31/More-Effective-C/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

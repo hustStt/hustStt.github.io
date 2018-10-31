@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="RETRY">
 <meta property="og:description" content="“在不同时间指向不同对象”用指针pointer “总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。 reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。  操作符区别increment decrement操作符的前置和后置形式 重载函数是以其参数类型来区分彼此的，然而不论increm">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-31T13:16:37.123Z">
+<meta property="og:updated_time" content="2018-10-31T13:22:29.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="More-Effective-C++">
 <meta name="twitter:description" content="“在不同时间指向不同对象”用指针pointer “总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。 reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。  操作符区别increment decrement操作符的前置和后置形式 重载函数是以其参数类型来区分彼此的，然而不论increm">
@@ -411,9 +411,9 @@
 </li>
 <li><p>如果返回的对象不是const的话，就可以像上述代码一样进行2次后置自增操作（显然int 不允许连续两次使用后置式increment操作符）。另外第二个operator++所改变的对象是第一个operator++返回的对象，而不是原对象，故i只完成了一次自增操作，容易引起混淆。</p>
 </li>
-<li>在效率问题上，后置式必须产生一个临时对象，需要构造也需要析构。前置式就没有如此的临时对象。故处理用户定制数据类型时，应该尽可能的使用前置式。</li>
-</ul>
-<h3 id="千万不要重载-amp-amp-和-操作符"><a href="#千万不要重载-amp-amp-和-操作符" class="headerlink" title="千万不要重载&amp;&amp;, || 和, 操作符"></a>千万不要重载&amp;&amp;, || 和, 操作符</h3><ul>
+<li><p>在效率问题上，后置式必须产生一个临时对象，需要构造也需要析构。前置式就没有如此的临时对象。故处理用户定制数据类型时，应该尽可能的使用前置式。</p>
+<a id="more"></a>
+<h3 id="千万不要重载-amp-amp-和-操作符"><a href="#千万不要重载-amp-amp-和-操作符" class="headerlink" title="千万不要重载&amp;&amp;, || 和, 操作符"></a>千万不要重载&amp;&amp;, || 和, 操作符</h3></li>
 <li><p>和C一样，C++对于“真假值表达式”采用“骤死式”评估方式。即，一旦该表达式的真假值确定，即使未完全检验，整个过程就结束了。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char *p;</span><br><span class="line">...</span><br><span class="line">if((p! = 0) &amp;&amp; (strlen(p) &gt; 10)) ....</span><br><span class="line">//只要p为null，就不会调用strlen</span><br></pre></td></tr></table></figure>
 </li>
