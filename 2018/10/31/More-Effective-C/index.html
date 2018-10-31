@@ -81,16 +81,17 @@
 
 
 
-<meta name="description" content="我还有很多头发，还可以继续学C++">
-<meta property="og:type" content="website">
-<meta property="og:title" content="RETRY">
-<meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
+<meta name="description" content="“在不同时间指向不同对象”用指针pointer “总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。 reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。  操作符区别increment decrement操作符的前置和后置形式 重载函数是以其参数类型来区分彼此的，然而不论increm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="More-Effective-C++">
+<meta property="og:url" content="http://yoursite.com/2018/10/31/More-Effective-C/index.html">
 <meta property="og:site_name" content="RETRY">
-<meta property="og:description" content="我还有很多头发，还可以继续学C++">
+<meta property="og:description" content="“在不同时间指向不同对象”用指针pointer “总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。 reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。  操作符区别increment decrement操作符的前置和后置形式 重载函数是以其参数类型来区分彼此的，然而不论increm">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-31T13:16:37.123Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RETRY">
-<meta name="twitter:description" content="我还有很多头发，还可以继续学C++">
+<meta name="twitter:title" content="More-Effective-C++">
+<meta name="twitter:description" content="“在不同时间指向不同对象”用指针pointer “总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。 reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。  操作符区别increment decrement操作符的前置和后置形式 重载函数是以其参数类型来区分彼此的，然而不论increm">
 
 
 
@@ -120,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/31/More-Effective-C/"/>
 
 
 
 
 
-  <title>归档 | RETRY</title>
+  <title>More-Effective-C++ | RETRY</title>
   
 
 
@@ -145,7 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/hustStt" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
@@ -254,148 +255,247 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/31/More-Effective-C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stt">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RETRY">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">More-Effective-C++</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-31T21:16:14+08:00">
+                2018-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 3 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">C++笔记</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/31/More-Effective-C/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">More-Effective-C++</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,231
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-10-31T21:16:14+08:00"
-              content="2018-10-31" >
-          10-31
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/04/C-note/" itemprop="url">
-              
-                <span itemprop="name">C++note</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-04T19:06:08+08:00"
-              content="2018-07-04" >
-          07-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/04/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-04T14:42:38+08:00"
-              content="2018-07-04" >
-          07-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <ul>
+<li>“在不同时间指向不同对象”用指针pointer</li>
+<li>“总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。</li>
+<li>reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。</li>
+</ul>
+<h2 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h2><h3 id="区别increment-decrement操作符的前置和后置形式"><a href="#区别increment-decrement操作符的前置和后置形式" class="headerlink" title="区别increment decrement操作符的前置和后置形式"></a>区别increment decrement操作符的前置和后置形式</h3><ul>
+<li>重载函数是以其参数类型来区分彼此的，然而不论increment或decrement操作符的前置式或后置式，都没有参数。为了填补这个语言的漏洞，==++只好让后置式有一个int自变量++==，并且在它被调用时，编译器默默为该int指定一个0值。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class UPInt &#123;</span><br><span class="line">public:</span><br><span class="line">    UPInt&amp; operator++();    //前置式 (prefix) ++</span><br><span class="line">    const UPInt operator++(int);   //后置式 (prefix) ++</span><br><span class="line"></span><br><span class="line">    UPInt&amp; operator--();</span><br><span class="line">    const UPInt operator--(int);</span><br><span class="line"></span><br><span class="line">    UPInt&amp; operator+=(int);</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">UPInt i;</span><br><span class="line">++i;    // i.operator++();</span><br><span class="line">i++;    // i.operator++(0);</span><br><span class="line">--i;    // i.operator--();</span><br><span class="line">i--;    // i.operator--(0);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 前置式：increment and fetch 累加然后取出</li>
+<li style="list-style: none"><input type="checkbox"> 后置式：fetch and increment 取出然后累加</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//前置式 累加然后取出</span><br><span class="line">UPInt&amp; UPInt::operator++()</span><br><span class="line">&#123;</span><br><span class="line">    *this += 1;     //累加</span><br><span class="line">    return *this;   //取出</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//后置式 取出然后累加</span><br><span class="line">const UPInt UPInt::operator++(int)</span><br><span class="line">&#123;</span><br><span class="line">    UPInt oldValue = *this; //取出</span><br><span class="line">    ++(*this);              //累加</span><br><span class="line">    return oldValue;        //返回先前被取出的值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数的唯一目的只是为了区别前置式和后置式而已。</li>
+<li>如果你在函数体中没有使用函数的命名参数，许多编译器会对此发出警告，一种常见的策略就是==故意略去==你不打算使用的参数的名称。</li>
+<li><p>后置式increment操作符返回一个对象，代表旧值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPInt i;</span><br><span class="line">i++++;   //实施后置式 increment操作符两次</span><br><span class="line">i.operator++(0).operator(0);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果返回的对象不是const的话，就可以像上述代码一样进行2次后置自增操作（显然int 不允许连续两次使用后置式increment操作符）。另外第二个operator++所改变的对象是第一个operator++返回的对象，而不是原对象，故i只完成了一次自增操作，容易引起混淆。</p>
+</li>
+<li>在效率问题上，后置式必须产生一个临时对象，需要构造也需要析构。前置式就没有如此的临时对象。故处理用户定制数据类型时，应该尽可能的使用前置式。</li>
+</ul>
+<h3 id="千万不要重载-amp-amp-和-操作符"><a href="#千万不要重载-amp-amp-和-操作符" class="headerlink" title="千万不要重载&amp;&amp;, || 和, 操作符"></a>千万不要重载&amp;&amp;, || 和, 操作符</h3><ul>
+<li><p>和C一样，C++对于“真假值表达式”采用“骤死式”评估方式。即，一旦该表达式的真假值确定，即使未完全检验，整个过程就结束了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char *p;</span><br><span class="line">...</span><br><span class="line">if((p! = 0) &amp;&amp; (strlen(p) &gt; 10)) ....</span><br><span class="line">//只要p为null，就不会调用strlen</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果重载&amp;&amp;和||操作符，“函数调用 语义”会取代“骤死式 语义”。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//如果对operator&amp;&amp;进行重载</span><br><span class="line">if(expression1 &amp;&amp; expression2) ...</span><br><span class="line">会被编译器视为以下两者之一：</span><br><span class="line"></span><br><span class="line">if(expression1.operator&amp;&amp;(expression2))</span><br><span class="line">//假设operator&amp;&amp;是个成员函数</span><br><span class="line">if(operator&amp;&amp;(expression1,expression2))</span><br><span class="line">//operator&amp;&amp;是个全局函数</span><br><span class="line">//注意如果需要用到私有成员 需使用友元</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也就是说函数调用 不存在什么骤死式语义。</p>
+</li>
+<li>有所谓的==逗号操作符==吗？ 有的</li>
+<li>C++有一些规则来定义&amp;&amp;和||面对内建类型的行为，同样也有一些规则来定义逗号操作符面对内建类型的行为。</li>
+<li>表达式如果内含逗号，那么逗号左侧会先被评估，然后逗号的右侧再被评估；最后整个逗号表达式的结果以 ==++逗号右侧的值++== 为代表。</li>
+<li>对于非成员函数，无法保证作为表达式一定比右侧先评估，因为两个表达式都被当做函数调用时的自变量，无法控制一个函数的自变量评估顺序。</li>
+<li>对于成员函数，因为编译器并不强迫做这样的事情，因此不要轻率的将逗号重载。</li>
+</ul>
+<h3 id="了解各种不同意义的new和delete"><a href="#了解各种不同意义的new和delete" class="headerlink" title="了解各种不同意义的new和delete"></a>了解各种不同意义的new和delete</h3><ul>
+<li><p>请说明new operator 和operator new之间的差异</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string *ps = new string(&quot;Memory Management&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>此处的new 是所谓的new operator。这个操作符是由语言内建的，不能被改变意义，总是做相同的事情，即，第一、分配足够的内存。第二、它调用了一个构造函数（constructor），为分配的内存中的对象设定初始值（初始化）。</p>
+</li>
+<li>而operator new则是跟malloc一样，唯一的任务就是分配内存，它不知道什么是构造函数（constructors），operator new 只负责内存分配。取得operator new返回的内存并将之转换为一个对象,是new operator的责任。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//函数 operator new 通常声明如下：</span><br><span class="line">void * operator new(size_t size);</span><br><span class="line">//此函数返回一个指针，指向一块原始的、未设初值的内存</span><br><span class="line"></span><br><span class="line">//函数调用</span><br><span class="line">void *rawMemory = operator new(sizeof(string));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
       
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/04/C-note/" rel="next" title="C++note">
+                <i class="fa fa-chevron-left"></i> C++note
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -403,6 +503,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNzgyOC8xNDM1OQ=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -423,8 +532,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -486,6 +604,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作符"><span class="nav-number">1.</span> <span class="nav-text">操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#区别increment-decrement操作符的前置和后置形式"><span class="nav-number">1.1.</span> <span class="nav-text">区别increment decrement操作符的前置和后置形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#千万不要重载-amp-amp-和-操作符"><span class="nav-number">1.2.</span> <span class="nav-text">千万不要重载&amp;&amp;, || 和, 操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#了解各种不同意义的new和delete"><span class="nav-number">1.3.</span> <span class="nav-text">了解各种不同意义的new和delete</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -627,6 +761,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -655,6 +793,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
