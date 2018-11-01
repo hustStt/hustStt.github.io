@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="“在不同时间指向不同对象”用指针pointer “总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。 reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。  操作符区别increment decrement操作符的前置和后置形式 重载函数是以其参数类型来区分彼此的，然而不论increm">
+<meta name="description" content="对象引用 事实上没有对象变量这样的东西存在。 只有引用到对象的变量。 对象引用变量保存的是存取对象的方法。 与C++创建对象进行比较C++创建对象方式&amp;emsp;&amp;emsp;在C++中我们可以采用如下两种方式来创建对象 123Dog  dog;//Dog为类名Dog *p = new Dog();  对于第一种方式而言，dog是被存储在栈中的，占用的大小是Dog类中成员变量占用内存的和，此处不包括">
 <meta property="og:type" content="article">
-<meta property="og:title" content="More-Effective-C++">
-<meta property="og:url" content="http://yoursite.com/2018/10/31/More-Effective-C/index.html">
+<meta property="og:title" content="Java-Note">
+<meta property="og:url" content="http://yoursite.com/2018/11/01/Java-Note/index.html">
 <meta property="og:site_name" content="RETRY">
-<meta property="og:description" content="“在不同时间指向不同对象”用指针pointer “总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。 reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。  操作符区别increment decrement操作符的前置和后置形式 重载函数是以其参数类型来区分彼此的，然而不论increm">
+<meta property="og:description" content="对象引用 事实上没有对象变量这样的东西存在。 只有引用到对象的变量。 对象引用变量保存的是存取对象的方法。 与C++创建对象进行比较C++创建对象方式&amp;emsp;&amp;emsp;在C++中我们可以采用如下两种方式来创建对象 123Dog  dog;//Dog为类名Dog *p = new Dog();  对于第一种方式而言，dog是被存储在栈中的，占用的大小是Dog类中成员变量占用内存的和，此处不包括">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-31T13:22:29.521Z">
+<meta property="og:updated_time" content="2018-11-01T08:36:34.473Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="More-Effective-C++">
-<meta name="twitter:description" content="“在不同时间指向不同对象”用指针pointer “总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。 reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。  操作符区别increment decrement操作符的前置和后置形式 重载函数是以其参数类型来区分彼此的，然而不论increm">
+<meta name="twitter:title" content="Java-Note">
+<meta name="twitter:description" content="对象引用 事实上没有对象变量这样的东西存在。 只有引用到对象的变量。 对象引用变量保存的是存取对象的方法。 与C++创建对象进行比较C++创建对象方式&amp;emsp;&amp;emsp;在C++中我们可以采用如下两种方式来创建对象 123Dog  dog;//Dog为类名Dog *p = new Dog();  对于第一种方式而言，dog是被存储在栈中的，占用的大小是Dog类中成员变量占用内存的和，此处不包括">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/10/31/More-Effective-C/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/11/01/Java-Note/"/>
 
 
 
 
 
-  <title>More-Effective-C++ | RETRY</title>
+  <title>Java-Note | RETRY</title>
   
 
 
@@ -269,7 +269,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/31/More-Effective-C/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/01/Java-Note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Stt">
@@ -286,7 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">More-Effective-C++</h1>
+          <h1 class="post-title" itemprop="name headline">Java-Note</h1>
         
 
         <div class="post-meta">
@@ -298,8 +298,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-31T21:16:14+08:00">
-                2018-10-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T16:30:53+08:00">
+                2018-11-01
               </time>
             
 
@@ -321,8 +321,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C-笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">C++笔记</span>
+                  <a href="/categories/Java笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Java笔记</span>
                   </a>
                 </span>
 
@@ -352,7 +352,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,231
+                  654
                 </span>
               
 
@@ -368,7 +368,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  2
                 </span>
               
             </div>
@@ -389,53 +389,38 @@
       
 
       
-        <ul>
-<li>“在不同时间指向不同对象”用指针pointer</li>
-<li>“总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。</li>
-<li>reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。</li>
-</ul>
-<h2 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h2><h3 id="区别increment-decrement操作符的前置和后置形式"><a href="#区别increment-decrement操作符的前置和后置形式" class="headerlink" title="区别increment decrement操作符的前置和后置形式"></a>区别increment decrement操作符的前置和后置形式</h3><ul>
-<li>重载函数是以其参数类型来区分彼此的，然而不论increment或decrement操作符的前置式或后置式，都没有参数。为了填补这个语言的漏洞，==++只好让后置式有一个int自变量++==，并且在它被调用时，编译器默默为该int指定一个0值。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class UPInt &#123;</span><br><span class="line">public:</span><br><span class="line">    UPInt&amp; operator++();    //前置式 (prefix) ++</span><br><span class="line">    const UPInt operator++(int);   //后置式 (prefix) ++</span><br><span class="line"></span><br><span class="line">    UPInt&amp; operator--();</span><br><span class="line">    const UPInt operator--(int);</span><br><span class="line"></span><br><span class="line">    UPInt&amp; operator+=(int);</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">UPInt i;</span><br><span class="line">++i;    // i.operator++();</span><br><span class="line">i++;    // i.operator++(0);</span><br><span class="line">--i;    // i.operator--();</span><br><span class="line">i--;    // i.operator--(0);</span><br></pre></td></tr></table></figure>
+        <h1 id="对象引用"><a href="#对象引用" class="headerlink" title="对象引用"></a>对象引用</h1><ul>
+<li>事实上没有对象变量这样的东西存在。</li>
+<li>只有引用到对象的变量。</li>
+<li><p>对象引用变量保存的是存取对象的方法。</p>
+<h2 id="与C-创建对象进行比较"><a href="#与C-创建对象进行比较" class="headerlink" title="与C++创建对象进行比较"></a>与C++创建对象进行比较</h2><h3 id="C-创建对象方式"><a href="#C-创建对象方式" class="headerlink" title="C++创建对象方式"></a>C++创建对象方式</h3><p>&emsp;&emsp;在C++中我们可以采用如下两种方式来创建对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Dog  dog;//Dog为类名</span><br><span class="line"></span><br><span class="line">Dog *p = new Dog();</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>对于第一种方式而言，dog是被存储在栈中的，占用的大小是Dog类中成员变量占用内存的和，此处不包括成员方法，因为成员方法是存放在公共存储区以便所有该类的对象都可以访问的。(在栈中)</p>
+</li>
+<li><p>对于第二种方式则不同，该方式使用了指针，在定义*p时在栈中开辟一个4字节的空间，new Dog()时在堆中开辟一块空间，然后将该空间的首地址赋值给*p，这样，通过*p就可以找到对象在堆中的任何成员方法了。（指针在栈中，分配的内存在堆中）</p>
+<h3 id="Java创建对象方式"><a href="#Java创建对象方式" class="headerlink" title="Java创建对象方式"></a>Java创建对象方式</h3><p>在C++中我们有两种创建对象的方式，而在Java中只提供了如下的一种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dog dog = new Dog();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JVM在进行内存管理时，首先会在栈中给dog分配一个空间，当new Dog();后会在堆中开辟对象的实际空间，然后将dog指向堆中的空间，这样我们就可以方法对象的成员变量了。</p>
+</li>
+<li>其中dog是一个引用，不能直接对地址进行++操作，保证内存的安全。</li>
+<li>对于任意一个java虚拟机来说，所有的引用大小都一样，但不同的java虚拟机间可能会以不同的额方式来表示引用。</li>
+<li>不能对引用变量进行运算。</li>
 </ul>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int [] nums;</span><br><span class="line">nums = new int[7];</span><br></pre></td></tr></table></figure>
 <ul>
-<li style="list-style: none"><input type="checkbox"> 前置式：increment and fetch 累加然后取出</li>
-<li style="list-style: none"><input type="checkbox"> 后置式：fetch and increment 取出然后累加</li>
+<li>数组也是对象</li>
+<li>数组中的每个元素都是变量。换而言之，会是8种primitive主数据类型变量中的一个，不然就是引用变量。<h2 id="方法的参数"><a href="#方法的参数" class="headerlink" title="方法的参数"></a>方法的参数</h2></li>
+<li>方法会运用形参。调用的一方会传入实参。</li>
+<li>Java是通过值传递的，就是说通过拷贝传递。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//前置式 累加然后取出</span><br><span class="line">UPInt&amp; UPInt::operator++()</span><br><span class="line">&#123;</span><br><span class="line">    *this += 1;     //累加</span><br><span class="line">    return *this;   //取出</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//后置式 取出然后累加</span><br><span class="line">const UPInt UPInt::operator++(int)</span><br><span class="line">&#123;</span><br><span class="line">    UPInt oldValue = *this; //取出</span><br><span class="line">    ++(*this);              //累加</span><br><span class="line">    return oldValue;        //返回先前被取出的值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>参数的唯一目的只是为了区别前置式和后置式而已。</li>
-<li>如果你在函数体中没有使用函数的命名参数，许多编译器会对此发出警告，一种常见的策略就是==故意略去==你不打算使用的参数的名称。</li>
-<li><p>后置式increment操作符返回一个对象，代表旧值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPInt i;</span><br><span class="line">i++++;   //实施后置式 increment操作符两次</span><br><span class="line">i.operator++(0).operator(0);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果返回的对象不是const的话，就可以像上述代码一样进行2次后置自增操作（显然int 不允许连续两次使用后置式increment操作符）。另外第二个operator++所改变的对象是第一个operator++返回的对象，而不是原对象，故i只完成了一次自增操作，容易引起混淆。</p>
-</li>
-<li><p>在效率问题上，后置式必须产生一个临时对象，需要构造也需要析构。前置式就没有如此的临时对象。故处理用户定制数据类型时，应该尽可能的使用前置式。</p>
-<a id="more"></a>
-<h3 id="千万不要重载-amp-amp-和-操作符"><a href="#千万不要重载-amp-amp-和-操作符" class="headerlink" title="千万不要重载&amp;&amp;, || 和, 操作符"></a>千万不要重载&amp;&amp;, || 和, 操作符</h3></li>
-<li><p>和C一样，C++对于“真假值表达式”采用“骤死式”评估方式。即，一旦该表达式的真假值确定，即使未完全检验，整个过程就结束了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char *p;</span><br><span class="line">...</span><br><span class="line">if((p! = 0) &amp;&amp; (strlen(p) &gt; 10)) ....</span><br><span class="line">//只要p为null，就不会调用strlen</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果重载&amp;&amp;和||操作符，“函数调用 语义”会取代“骤死式 语义”。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//如果对operator&amp;&amp;进行重载</span><br><span class="line">if(expression1 &amp;&amp; expression2) ...</span><br><span class="line">会被编译器视为以下两者之一：</span><br><span class="line"></span><br><span class="line">if(expression1.operator&amp;&amp;(expression2))</span><br><span class="line">//假设operator&amp;&amp;是个成员函数</span><br><span class="line">if(operator&amp;&amp;(expression1,expression2))</span><br><span class="line">//operator&amp;&amp;是个全局函数</span><br><span class="line">//注意如果需要用到私有成员 需使用友元</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>也就是说函数调用 不存在什么骤死式语义。</p>
-</li>
-<li>有所谓的==逗号操作符==吗？ 有的</li>
-<li>C++有一些规则来定义&amp;&amp;和||面对内建类型的行为，同样也有一些规则来定义逗号操作符面对内建类型的行为。</li>
-<li>表达式如果内含逗号，那么逗号左侧会先被评估，然后逗号的右侧再被评估；最后整个逗号表达式的结果以 ==++逗号右侧的值++== 为代表。</li>
-<li>对于非成员函数，无法保证作为表达式一定比右侧先评估，因为两个表达式都被当做函数调用时的自变量，无法控制一个函数的自变量评估顺序。</li>
-<li>对于成员函数，因为编译器并不强迫做这样的事情，因此不要轻率的将逗号重载。</li>
-</ul>
-<h3 id="了解各种不同意义的new和delete"><a href="#了解各种不同意义的new和delete" class="headerlink" title="了解各种不同意义的new和delete"></a>了解各种不同意义的new和delete</h3><ul>
-<li><p>请说明new operator 和operator new之间的差异</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string *ps = new string(&quot;Memory Management&quot;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>此处的new 是所谓的new operator。这个操作符是由语言内建的，不能被改变意义，总是做相同的事情，即，第一、分配足够的内存。第二、它调用了一个构造函数（constructor），为分配的内存中的对象设定初始值（初始化）。</p>
-</li>
-<li>而operator new则是跟malloc一样，唯一的任务就是分配内存，它不知道什么是构造函数（constructors），operator new 只负责内存分配。取得operator new返回的内存并将之转换为一个对象,是new operator的责任。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//函数 operator new 通常声明如下：</span><br><span class="line">void * operator new(size_t size);</span><br><span class="line">//此函数返回一个指针，指向一块原始的、未设初值的内存</span><br><span class="line"></span><br><span class="line">//函数调用</span><br><span class="line">void *rawMemory = operator new(sizeof(string));</span><br></pre></td></tr></table></figure>
-</li>
+<h2 id="数据隐藏"><a href="#数据隐藏" class="headerlink" title="数据隐藏"></a>数据隐藏</h2><ul>
+<li>封装的基本原则：将你的实例变量标记为私有的，并提供公有的getter与setter来控制存取动作。</li>
+<li>private</li>
+<li>public<h2 id="声明与初始化实例变量"><a href="#声明与初始化实例变量" class="headerlink" title="声明与初始化实例变量"></a>声明与初始化实例变量</h2></li>
+<li>你无需初始实例变量，因为他们会有默认值。</li>
+<li>数字的primitive（包括char）的预设为0，boolean的预设为false，而对象引用则为null。<br>+</li>
 </ul>
 
       
@@ -461,8 +446,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/04/C-note/" rel="next" title="C++note">
-                <i class="fa fa-chevron-left"></i> C++note
+              <a href="/2018/11/01/QT5-9-oracle/" rel="next" title="QT5.9连接oracle 驱动编译">
+                <i class="fa fa-chevron-left"></i> QT5.9连接oracle 驱动编译
               </a>
             
           </div>
@@ -470,10 +455,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/01/QT5-9-oracle/" rel="prev" title="QT5.9连接oracle 驱动编译">
-                QT5.9连接oracle 驱动编译 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -618,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作符"><span class="nav-number">1.</span> <span class="nav-text">操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#区别increment-decrement操作符的前置和后置形式"><span class="nav-number">1.1.</span> <span class="nav-text">区别increment decrement操作符的前置和后置形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#千万不要重载-amp-amp-和-操作符"><span class="nav-number">1.2.</span> <span class="nav-text">千万不要重载&amp;&amp;, || 和, 操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#了解各种不同意义的new和delete"><span class="nav-number">1.3.</span> <span class="nav-text">了解各种不同意义的new和delete</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对象引用"><span class="nav-number">1.</span> <span class="nav-text">对象引用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#与C-创建对象进行比较"><span class="nav-number">1.1.</span> <span class="nav-text">与C++创建对象进行比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-创建对象方式"><span class="nav-number">1.1.1.</span> <span class="nav-text">C++创建对象方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java创建对象方式"><span class="nav-number">1.1.2.</span> <span class="nav-text">Java创建对象方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组"><span class="nav-number">1.2.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法的参数"><span class="nav-number">1.3.</span> <span class="nav-text">方法的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据隐藏"><span class="nav-number">1.4.</span> <span class="nav-text">数据隐藏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声明与初始化实例变量"><span class="nav-number">1.5.</span> <span class="nav-text">声明与初始化实例变量</span></a></li></ol></li></ol></div>
             
 
           </div>
