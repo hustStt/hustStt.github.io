@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="RETRY">
 <meta property="og:description" content="“在不同时间指向不同对象”用指针pointer “总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。 reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。  操作符区别increment decrement操作符的前置和后置形式 重载函数是以其参数类型来区分彼此的，然而不论increm">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-31T13:22:29.521Z">
+<meta property="og:updated_time" content="2018-11-01T13:34:48.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="More-Effective-C++">
 <meta name="twitter:description" content="“在不同时间指向不同对象”用指针pointer “总是会代表某个对象”，“一旦代表了该对象就不能够再改变”，那么应该用reference。 reinterpret_cast 操作符的转换结果几乎总是与编译平台息息相关。故reinterpret_cast不具备移植性。  操作符区别increment decrement操作符的前置和后置形式 重载函数是以其参数类型来区分彼此的，然而不论increm">
@@ -350,7 +350,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,231
+                  2,178
                 </span>
               
 
@@ -366,7 +366,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  9
                 </span>
               
             </div>
@@ -435,6 +435,48 @@
 <li>而operator new则是跟malloc一样，唯一的任务就是分配内存，它不知道什么是构造函数（constructors），operator new 只负责内存分配。取得operator new返回的内存并将之转换为一个对象,是new operator的责任。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//函数 operator new 通常声明如下：</span><br><span class="line">void * operator new(size_t size);</span><br><span class="line">//此函数返回一个指针，指向一块原始的、未设初值的内存</span><br><span class="line"></span><br><span class="line">//函数调用</span><br><span class="line">void *rawMemory = operator new(sizeof(string));</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h4 id="Placement-new"><a href="#Placement-new" class="headerlink" title="Placement new"></a>Placement new</h4><ul>
+<li>针对一个已经存在的对象调用其constructor并无意义，因为constructor用来将对象初始化，而对象只能被初始化一次。</li>
+<li><p>偶尔存在一些分配好的原始内存，需要在上面构建对象。有一个特殊版本的operator new 称为placement new</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Widget &#123;</span><br><span class="line">public:</span><br><span class="line">    Widget(int widgetSize);</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Widget * constructWidgetInBuffer(void *buffer,int widgetSize)</span><br><span class="line">&#123;</span><br><span class="line">    return new (buffer) Widget(widgetSize);</span><br><span class="line">    //是 new operator 的用法之一，其中指定一个额外自变量（buffer）作为new operator “隐式调用operator new”时所用。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>此函数返回指针，指向一个Widget <strong>object</strong>，它被构造于传递给此函数的一块内存缓冲区上。当程序运行到shared memory 或 memory-mapped I/O，这类函数可能是有用的，因为对象必须置于特定地址，或是置于以特殊函数分配出来的内存上。</p>
+</li>
+<li>是 new operator 的用法之一，其中指定一个额外自变量（buffer）作为new operator “隐式调用operator new”时所用。</li>
+<li><p>于是，被调用的operator new除了接受“一定得有的size_t自变量”之外，还接受了一个void *参数，指向一块内存，准备用来接受构造好的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void * operator new(size_t, void *location)</span><br><span class="line">&#123;</span><br><span class="line">    return location;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>因为已经知道了对象放在哪里，故Place new唯一需要做的就是将他获得的指针再返回。</p>
+</li>
+<li>总结：<ul>
+<li>如果你希望将对象产生于heap，请使用 new operator。</li>
+<li>如果你只打算分配内存，请调用operator new，这样就没有constructor 会被调用。</li>
+<li>如果你打算在heap objects产生时自己决定内存分配方式，请写一个自己的operator new。</li>
+<li>如果你打算在已经分配（并拥有指针）的内存中构造对象，请使用<strong>placement</strong> new。</li>
+<li>也就是说new operator调用的过程中会先隐式调用operator new 用于分配内存，之后再调用构造函数</li>
+</ul>
+</li>
+</ul>
+<h3 id="删除-与-内存释放"><a href="#删除-与-内存释放" class="headerlink" title="删除 与 内存释放"></a>删除 与 内存释放</h3><ul>
+<li><p>函数 operator delete 对于内建的 delete <strong>operator</strong>，就好像 operator new 对于 new <strong>operator</strong> 一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string *ps;</span><br><span class="line">...</span><br><span class="line">delete ps;  //使用 delete operator</span><br><span class="line">//既可以析构ps所指对象，又能够释放被该对象占用的内存。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内存释放动作是由operator delete执行的，通常声明如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void operator delete(void *memoryToBeDeallocated);</span><br><span class="line"></span><br><span class="line">因此，下面这个动作：</span><br><span class="line">delete ps;</span><br><span class="line">会产生编译器产生近似下面的代码：</span><br><span class="line"></span><br><span class="line">ps-&gt;~string();  //析构</span><br><span class="line">operator delete(ps);    //释放对象占用内存</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>相当于free</p>
+</li>
+<li>如果你使用placement new，在某内存块中产生对象，你应该避免对那块内存使用delete operator。因为delete operator会调用 operator delete来释放内存，故为了抵消该对象的constructor的影响，你应该直接调用该对象的destructor<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void * mallocShared(size_t size);</span><br><span class="line">void freeShared(void *memory);</span><br><span class="line"></span><br><span class="line">void *shareMemory = mallocShared(sizeof(Widget));</span><br><span class="line">Widget *pw = constructWidgetInBuffer(sharedMemory,10); //placement new</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">delete pw;  //无定义，因为sharedMemory来自mallocShared 不是operator new</span><br><span class="line"></span><br><span class="line">pw-&gt;~Widget(); //可行 析构该对象 单未释放widget所占空间</span><br><span class="line"></span><br><span class="line">freeShared(pw); //释放pw所指的内存</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">string *ps = new string[10];//对象数组</span><br><span class="line"></span><br><span class="line">string *pp[10];  //指针数组</span><br><span class="line">for(int i = 0;i &lt; 10;++i)&#123;</span><br><span class="line">    pp[i] = new string;</span><br><span class="line">    delete pp[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">delete [] ps;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>new operator 的行为与先前产生单一对象的情况略有不同，内存用operator new[]函数进行分配（通常被称为 array new）</li>
+<li>和operator new一样，operator new[] 也可以被重载。这使得你多去了数组的内存分配权。</li>
+<li>数组版new operator必须针对数组中的每个对象调用一个construct</li>
+<li>同样的道理，当delete operator 被用于数组，他会针对数组中的每个元素调用其destructor，然后调用operator delete[] 释放内存。</li>
+</ul>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>+</p>
 
       
     </div>
@@ -616,7 +658,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作符"><span class="nav-number">1.</span> <span class="nav-text">操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#区别increment-decrement操作符的前置和后置形式"><span class="nav-number">1.1.</span> <span class="nav-text">区别increment decrement操作符的前置和后置形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#千万不要重载-amp-amp-和-操作符"><span class="nav-number">1.2.</span> <span class="nav-text">千万不要重载&amp;&amp;, || 和, 操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#了解各种不同意义的new和delete"><span class="nav-number">1.3.</span> <span class="nav-text">了解各种不同意义的new和delete</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作符"><span class="nav-number">1.</span> <span class="nav-text">操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#区别increment-decrement操作符的前置和后置形式"><span class="nav-number">1.1.</span> <span class="nav-text">区别increment decrement操作符的前置和后置形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#千万不要重载-amp-amp-和-操作符"><span class="nav-number">1.2.</span> <span class="nav-text">千万不要重载&amp;&amp;, || 和, 操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#了解各种不同意义的new和delete"><span class="nav-number">1.3.</span> <span class="nav-text">了解各种不同意义的new和delete</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Placement-new"><span class="nav-number">1.3.1.</span> <span class="nav-text">Placement new</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除-与-内存释放"><span class="nav-number">1.4.</span> <span class="nav-text">删除 与 内存释放</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数组"><span class="nav-number">1.4.1.</span> <span class="nav-text">数组</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常"><span class="nav-number">2.</span> <span class="nav-text">异常</span></a></li></ol></div>
             
 
           </div>
