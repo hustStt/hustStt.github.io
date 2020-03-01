@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="顺序编程变量 出现在:&#x3D; 左侧的变量不应该是已经被声明过的，否则会导致编译错误 12var i inti :&#x3D; 2  变量初始化和变量赋值是两种不同的概念  支持多重赋值 1i, j &#x3D; j, i int和int32在Go语言中被认为是两种不同的类型，编译器不会自动类型转换 1234var value2 int32value1 :&#x3D; 64   &#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golang">
+<meta property="og:url" content="http://yoursite.com/2020/03/02/Golang/index.html">
+<meta property="og:site_name" content="Lemon">
+<meta property="og:description" content="顺序编程变量 出现在:&#x3D; 左侧的变量不应该是已经被声明过的，否则会导致编译错误 12var i inti :&#x3D; 2  变量初始化和变量赋值是两种不同的概念  支持多重赋值 1i, j &#x3D; j, i int和int32在Go语言中被认为是两种不同的类型，编译器不会自动类型转换 1234var value2 int32value1 :&#x3D; 64   &#x2F;&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-01T16:00:41.000Z">
+<meta property="article:modified_time" content="2020-03-01T16:02:10.250Z">
+<meta property="article:author" content="stt">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/02/Golang/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>Golang | Lemon</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lemon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/02/Golang/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head3.jpg">
+      <meta itemprop="name" content="stt">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lemon">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Golang
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-02 00:00:41 / 修改时间：00:02:10" itemprop="dateCreated datePublished" datetime="2020-03-02T00:00:41+08:00">2020-03-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="顺序编程"><a href="#顺序编程" class="headerlink" title="顺序编程"></a>顺序编程</h1><h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ul>
+<li><p>出现在:= 左侧的变量不应该是已经被声明过的，否则会导致编译错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var i int</span><br><span class="line">i :&#x3D; 2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>变量初始化和变量赋值是两种不同的概念</p>
+</li>
+<li><p>支持多重赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i, j &#x3D; j, i</span><br></pre></td></tr></table></figure></li>
+<li><p>int和int32在Go语言中被认为是两种不同的类型，编译器不会自动类型转换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var value2 int32</span><br><span class="line">value1 :&#x3D; 64   &#x2F;&#x2F;int</span><br><span class="line">value2 &#x3D; value1</span><br><span class="line">&#x2F;&#x2F;编译错误</span><br></pre></td></tr></table></figure>
+<h3 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h3></li>
+<li><p>布尔类型不能接受其他类型的赋值，不支持自动或强制的类型转换。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var v1 bool</span><br><span class="line">v1 &#x3D; 1   &#x2F;&#x2F; 编译错误</span><br><span class="line">v1 &#x3D; bool(1) &#x2F;&#x2F; 编译错误</span><br><span class="line"></span><br><span class="line">v1 &#x3D; (1!&#x3D;0) &#x2F;&#x2F;编译正确</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h3></li>
+<li><p>float32 float64 等价于C语言的float类型和double类型</p>
+</li>
+<li><p>自动推到的类型将被自动设为float64</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var fvalue1 float32</span><br><span class="line"></span><br><span class="line">fvalue &#x3D; 12</span><br><span class="line">fvalue2 :&#x3D; 12.0</span><br></pre></td></tr></table></figure></li>
+<li><p>浮点数比较不是一种精准的表达方式，不能直接用==来判断两个浮点数是否相等，会不稳定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;替代方案</span><br><span class="line"></span><br><span class="line">import &quot;math&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; p为用户自定义的比较精度，比如0.0001</span><br><span class="line">func IsEqual(f1, f2, p float64) bool &#123;</span><br><span class="line">    return math.Abs(f1-f2) &lt; p</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="复数类型"><a href="#复数类型" class="headerlink" title="复数类型"></a>复数类型</h3></li>
+<li><p>复数complex64  实部（real） 虚部（imag）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var value1 complex64</span><br><span class="line">value1 &#x3D; 3.2 + 12i</span><br><span class="line">value2 :&#x3D; 3.2 + 12i</span><br><span class="line">value3 :&#x3D; complex(3.2, 12)</span><br></pre></td></tr></table></figure></li>
+<li><p>对于一个复数z = complex(x, y)， 可以通过real(z) 获取实部，通过imag(z)获取虚部  math/complx库</p>
+</li>
+</ul>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><ul>
+<li>字符串的内容可以用类似于数组下标的方式获取，但与数组不同，字符串的内容不能在初始化后被修改。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str :&#x3D; &quot;Hello world&quot;</span><br><span class="line">str[0] &#x3D; &#39;X&#39; &#x2F;&#x2F;编译错误</span><br><span class="line">len(str)  &#x2F;&#x2F;11</span><br></pre></td></tr></table></figure></li>
+<li>字符串操作<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x + y</span><br><span class="line">len(s)</span><br><span class="line">s[i]</span><br></pre></td></tr></table></figure></li>
+<li>字符串遍历<ul>
+<li>字节数组遍历<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">str :&#x3D; &quot;Hello, 世界&quot;</span><br><span class="line">n :&#x3D; len(str)  &#x2F;&#x2F; 13</span><br><span class="line">for i :&#x3D; 0; i &lt; n; i++ &#123;</span><br><span class="line">    ch :&#x3D; str[i] &#x2F;&#x2F; 依据下标取字符串中的字符 类型为byte</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>Unicode字符遍历<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str :&#x3D; &quot;Hello, 世界&quot;</span><br><span class="line">for i,ch :&#x3D; range str &#123;</span><br><span class="line">    fmt.Println(i, ch) &#x2F;&#x2F;ch的类型为rune</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a>字符类型</h3></li>
+</ul>
+</li>
+<li>在Go语言中支持两个字符类型，一个是byte(uint8的别名)，代表UTF-8字符串的单个字节的值。另一个是rune，代表单个Unicode字符</li>
+<li>Go语言的多数API都假设字符串为UTF-8编码，尽管Unicode字符在标准库中有支持，但是实际上较少使用。</li>
+</ul>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><ol>
+<li>元素访问<ul>
+<li>可以使用数组下标访问</li>
+<li>可以使用关键字range，便捷的遍历容器中的元素，数组也支持<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for i, v :&#x3D; range array &#123;</span><br><span class="line">    fmt.Println(&quot;Array element[&quot;, i, &quot;]&#x3D;&quot;, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>值类型<ul>
+<li>Go语言中数组是一个值类型。所有值类型变量在赋值和作为参数传递时都将产生一次复制动作。如果数组作为函数的参数类型，则在函数调用时该参数将发生数据复制。</li>
+<li>注意这与C++不一样 C++传递的是指针</li>
+</ul>
+</li>
+</ol>
+<h3 id="数组切片"><a href="#数组切片" class="headerlink" title="数组切片"></a>数组切片</h3><ul>
+<li>数组切片就像一个指向数组的指针，实际上它有自己的数据结构，数组切片的数据结构可以抽象为以下3个变量。<ul>
+<li>一个指向原生数组的指针</li>
+<li>数组切片中的元素个数</li>
+<li>数组切片已分配的存储空间</li>
+</ul>
+</li>
+</ul>
+<h4 id="创建数组切片"><a href="#创建数组切片" class="headerlink" title="创建数组切片"></a>创建数组切片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">    var myArray [10]int &#x3D; [10]int&#123;1,2,3,4,5,6,7,8,9,10&#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;基于数组创建一个数组切片</span><br><span class="line">    var mySlice []int &#x3D; myArray[:5]</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>基于数组生成一个数组切片</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;基于myArray的所有元素创建数组切片：</span><br><span class="line">mySlice &#x3D; myArray[:]</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;基于myArray的前5个元素创建数组切片：</span><br><span class="line">mySlice &#x3D; myArray[:5]</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;基于从第5个元素开始的所有元素创建数组切片</span><br><span class="line">mySlice &#x3D; myArray[5:]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接创建</p>
+<ul>
+<li>并非一定要实现准备一个数组才能创建数组切片。使用内置函数make()可以用于灵活的创建数组切片。</li>
+<li>事实上还会有一个匿名数组被创建出来，只是不需要我们来操心而已。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;创建一个初始元素个数为5的数组切片，元素初始值为0：</span><br><span class="line">mySlice1 &#x3D; make([]int, 5)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;创建一个初始元素个数为5的数组切片，元素初始值为0，并预留10个元素的储存空间:</span><br><span class="line">mySlice2 &#x3D; make([]int, 5, 10) </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;直接创建并初始化包含5个元素的数组切片</span><br><span class="line">mySlice3 :&#x3D; []int&#123;1, 2, 3, 4, 5&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="元素遍历"><a href="#元素遍历" class="headerlink" title="元素遍历"></a>元素遍历</h4><ul>
+<li>与数组遍历差不多<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for i :&#x3D; 0;i &lt; len(mySlice);i++&#123;</span><br><span class="line">    fmt.Println(&quot;xxxx&quot; , i, &quot;xxxx&quot;, mySlice[i])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for i, v :&#x3D; rangmySlice &#123;</span><br><span class="line">    fmt.Println(&quot;xxxx&quot; , i, &quot;xxxx&quot;, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="动态增减元素"><a href="#动态增减元素" class="headerlink" title="动态增减元素"></a>动态增减元素</h4><ul>
+<li>课动态增减元素是数组切片比数组更为强大的功能。与数组相比，数组切片多了一个存储能力的概念（capacity），即元素个数和分配的空间可以是两个不同的值。</li>
+<li>合理地设置存储能力的值，可以大幅降低数组切片内部重新分配内存和搬运内存块的频率。</li>
+<li>数组切片支持内置的cap()函数和len()函数，cap函数返回的是数组切片分配的空间大小，而len函数返回的是切片中当前存储的元素个数。</li>
+<li>可以使用append()函数在后面继续新增元素<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mySlice &#x3D; append(mySlice, 1, 2, 3)</span><br><span class="line"></span><br><span class="line">mySlice2 :&#x3D; []int&#123;8,9,10&#125;</span><br><span class="line">&#x2F;&#x2F; 给mySlice后面添加另一个数组切片</span><br><span class="line">mySlice &#x3D; append(mySlice, mySlice2...)</span><br></pre></td></tr></table></figure></li>
+<li>后面的三个点，相当于吧mySlice2包含的所有元素打散后传入</li>
+<li>数组切片会自动处理存储空间不足的问题，如果追加的内容长度超过当前已分配的存储空间，数组切片会自动分配一块足够大的内存。</li>
+</ul>
+<h4 id="基于数组切片创建数组切片"><a href="#基于数组切片创建数组切片" class="headerlink" title="基于数组切片创建数组切片"></a>基于数组切片创建数组切片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">oldSlice :&#x3D; []int&#123;1,2,3,4,5&#125;</span><br><span class="line">newSlice :&#x3D; oldSlice[:3]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>选择的oldSlicef元素范围甚至可以超过所包含的元素个数，比如newSlice可以基于oldSlice的前6个元素创建，虽然oldSlice只包含5个元素，只要这个范围不超过oldSlice的存储能力，那么就是合法的，超出的部分会填上0</li>
+</ul>
+<h4 id="内容复制"><a href="#内容复制" class="headerlink" title="内容复制"></a>内容复制</h4><ul>
+<li>数组切片支持Go语言的另一个内置函数copy()，用于将内容从一个数组切片复制到另一个数组切片。如果两个数组切片不一样大，就会按照其中较小的那个数组切片的元素个数进行复制。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">slice1 :&#x3D; []int&#123;1,2,3,4,5&#125;</span><br><span class="line">slice2 :&#x3D; []int&#123;5,4,3&#125;</span><br><span class="line"></span><br><span class="line">copy(slice2, slice1) &#x2F;&#x2F;只会复制slice1的前3个元素到slice2中</span><br><span class="line">copy(slice1, slice2) &#x2F;&#x2F;只会复制slice2的3个元素到slice1的前3个位置</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><ul>
+<li><p>1.变量声明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;map的声明基本上没有多余的元素</span><br><span class="line">var myMap map[string] PersonInfo</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;string是键的类型，persionInfo是其所存放的值类型</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.创建</p>
+</li>
+<li><p>可以使用Go语言的内置函数make()来创建一个新map</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var myMap map[string] PersonInfo</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;创建</span><br><span class="line">myMap &#x3D; make(map[string] PersonInfo)</span><br><span class="line">myMap &#x3D; make(map[string] PersonInfo, 1000)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;创建并初始化</span><br><span class="line">myMap &#x3D; map[string] PersonInfo&#123;</span><br><span class="line">    &quot;1234&quot; : PersonInfo&#123;&quot;1&quot;, &quot;Jack&quot;, &quot;Room 101,...&quot;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;元素赋值</span><br><span class="line">myMap[&quot;1234&quot;] &#x3D; PersonInfo&#123;&quot;1&quot;, &quot;Jack&quot;, &quot;Room 101,...&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol start="3">
+<li>元素删除</li>
+</ol>
+</li>
+<li>Go语言提供了一个内置函数delete()，用于删除容器中的元素。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete(myMap, &quot;1234&quot;)</span><br><span class="line">&#x2F;&#x2F;如果“1234”这个键不存在，那么这个调用将上面都不发生，也不会有什么副作用，但是如果传入map变量的值为nil，该调用将导致程序抛出异常</span><br></pre></td></tr></table></figure></li>
+<li>4.元素查找</li>
+<li>在Go语言中map查找功能设计得比较精巧<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">value, ok :&#x3D; myMap[&quot;1234&quot;]</span><br><span class="line">if ok &#123;&#x2F;&#x2F;找到了</span><br><span class="line">    &#x2F;&#x2F;处理找到的value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h3><ul>
+<li>条件跳转<ul>
+<li>条件语句不需要使用括号将条件包含起来</li>
+<li>无论语句体内有几条语句，花括号 { } 都是必须存在的</li>
+<li>左花括号 { 必须与 if 或者 else 处于同一行</li>
+<li>在if之后，条件语句之前，可以添加遍历初始化语句，使用；分隔</li>
+<li>在有返回值的函数中，不允许将“最终的”return语句包含在if…else…结构中，否则会编译失败。</li>
+</ul>
+</li>
+<li>选择语句<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">switch i &#123;</span><br><span class="line">    case 0:</span><br><span class="line">        fmt.Printf(&quot;0&quot;)</span><br><span class="line">    case 1:</span><br><span class="line">        fmt.Printf(&quot;1&quot;)</span><br><span class="line">    default:</span><br><span class="line">        fmt.Printf(&quot;default&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>switch后面的表达式甚至不是必需的，比如<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">switch &#123;</span><br><span class="line">    case 0 &lt;&#x3D; Num &amp;&amp; Num &lt;&#x3D; 3:</span><br><span class="line">        fmt.Printf(&quot;0-3&quot;)</span><br><span class="line">    case 4 &lt;&#x3D; Num &amp;&amp; Num &lt;&#x3D; 6:</span><br><span class="line">        fmt.Printf(&quot;4-6&quot;)</span><br><span class="line">    case 7 &lt;&#x3D; Num &amp;&amp; Num &lt;&#x3D;9:</span><br><span class="line">        fmt.Printf(&quot;7-9&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在使用switch结构时，我们需要注意一下几点：<ul>
+<li>条件表达式不限制为常量或者整数</li>
+<li>单个case中，可以出现多个结果选项</li>
+<li>与C语言等规则相反，Go语言不需要用break来明确退出一个case</li>
+<li>只有在case只能够明确添加fallthrough关键字，才会继续执行紧跟的下一个case</li>
+<li>可以不设定switch之后的条件表达式，在此种情况下，整个switch结构与多个if…else…的逻辑作用等同</li>
+</ul>
+</li>
+<li>循环语句<ul>
+<li>Go语言不支持以逗号为间隔的多个赋值语句，必须使用平行赋值的方式来初始化多个变量</li>
+<li>Go语言的for循环同样支持continue和break来控制循环，但是它提供了一个更高级的break，可以选择终端哪一个循环<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">JLoop:</span><br><span class="line">for j :&#x3D; 0; j &lt; 5;j++ &#123;</span><br><span class="line">    for i :&#x3D; 0; i &lt; 5;i++ &#123;</span><br><span class="line">        if i &gt; 5 &#123;</span><br><span class="line">            break JLoop</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>跳转语句 支持goto</li>
+</ul>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><h4 id="不定参数"><a href="#不定参数" class="headerlink" title="不定参数"></a>不定参数</h4><ul>
+<li><p>1.不定参数类型</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func myfunc(args ...int) &#123;</span><br><span class="line">    for _, arg :&#x3D; range args &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>…type格式的类型只能作为函数的参数类型存在，并且必须是最后一个参数。它是一个语法糖，从内部实现机理上来说，类型…type本质上是一个数组切片，也就是[]type，这也是为什么上面的参数args可以使用for循环来获得每个传入的参数</li>
+</ul>
+</li>
+<li><p>2.不定参数的传递</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func myfunc(args ...int)&#123;</span><br><span class="line">    &#x2F;&#x2F;按原样传递</span><br><span class="line">    myfunc3(args...)</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;传递片段，实际上任意的int slice都可以传进去</span><br><span class="line">    myfunc3(args[1:]...)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.任意类型的不定参数</p>
+<ul>
+<li>之前的例子中将不定参数类型约束为int，如果你希望传任意类型，可以指定类型为interface{}。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func Printf(format string, args ...interface&#123;&#125;)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>用interface{}传递任意类型数据是Go语言的惯例用法。使用interface{}仍然是类型安全的，这和C/C++不太一样。</li>
+</ul>
+</li>
+<li><p>4.多返回值</p>
+<ul>
+<li>可以给返回值命名，就像函数的输入参数一样，返回值被命名之后，他们的值在函数开始的时候被自动初始化为空，在函数中执行不带任何参数的return 语句时，会返回对应的返回值变量的值。</li>
+</ul>
+</li>
+<li><p>5.匿名函数与闭包</p>
+<ul>
+<li>匿名函数是指不需要定义函数名的一种函数实现方式</li>
+<li>函数可以向普通遍历一样被传递或使用，这与C语言的回调函数比较类似。不同的是，Go语言支持随时在代码里定义匿名函数</li>
+<li>匿名函数由一个不带函数名的函数声明和函数体组成<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func(a, b int, z float64) bool&#123;</span><br><span class="line">    return a*b &lt;int(z)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>匿名函数可以直接赋值给一个变量或者直接执行<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f :&#x3D; func(x, y int) int &#123;</span><br><span class="line">    return x + y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func(ch chan int) &#123;</span><br><span class="line">    ch &lt;- ACK</span><br><span class="line">&#125; (reply_chan) &#x2F;&#x2F;花括号后面直接跟参数列表表示函数调用</span><br></pre></td></tr></table></figure></li>
+<li>Go的匿名函数是一个闭包</li>
+<li>闭包是可以包含自由变量的代码块，这些变量不在这个代码块内或者任何全局上下文中定义，而是在代码块的环境中定义。要执行的代码块（由于自由变量包含在代码块中，所以这些自由变量以及他们引用的对象没有被释放）为自由变量提供绑定的计算环境（作用）</li>
+<li>闭包的价值在于可以作为函数对象或者匿名函数，对于类型系统而言，这意味着不仅要表示数据还要表示代码。支持闭包的多数语言都将函数作为第一级对象，就是说这些函数可以存储到变量中作为参数传递给其他函数，最重要的是能够被函数动态创建和返回。</li>
+<li>Go语言中的闭包同样也会引用到函数外的变量，闭包的实现确保只要闭包还被使用，那么被闭包引用的变量会一直存在。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    var j int &#x3D; 5</span><br><span class="line">    </span><br><span class="line">    a :&#x3D; func()(func()) &#123;</span><br><span class="line">        var i int &#x3D; 10</span><br><span class="line">        return func() &#123;</span><br><span class="line">            fmt.Printf(&quot;i, j: %d, %d\n&quot;, i, j)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    a()</span><br><span class="line">    </span><br><span class="line">    j *&#x3D; 2</span><br><span class="line">    a()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3></li>
+</ul>
+</li>
+<li><p>漂亮的错误处理规范是Go语言最大的亮点之一</p>
+</li>
+</ul>
+<h4 id="error接口"><a href="#error接口" class="headerlink" title="error接口"></a>error接口</h4><ul>
+<li>Go语言引入了一个关于错误处理的标准模式，即error接口，该接口的定义如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type error interface &#123;</span><br><span class="line">    Error() string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>对于大多数函数，对于要返回错误，大致上都可以定义为如下模式，将error作为多种返回值的最后一个，但这并非是强制要求：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">func Foo(param int)(n int, err error)&#123;</span><br><span class="line">    &#x2F;&#x2F;...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;调用时的代码建议按如下方式处理错误情况</span><br><span class="line">n, err :&#x3D; Foo(0)</span><br><span class="line"></span><br><span class="line">if err !&#x3D; nil &#123;</span><br><span class="line">    &#x2F;&#x2F; 错误处理</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    &#x2F;&#x2F;使用返回值n</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h4><ul>
+<li>以文件关闭为例，每一个可能抛出异常的地方，每一个return的位置，都需要关掉之前打开的文件句柄。即使你头脑清晰，想明白了每一个分支和可能出错的条件，在该关闭的地方都关闭了，怎么做到后继者也能做到同样的水平？</li>
+<li>C++另一种解决方案：开发者可以将需要释放的资源变量都声明在函数的开头部分，并在函数的结尾部分统一释放资源。函数需要退出时，就必须使用goto语句跳转到指定位置先完成资源清理工作，而不能调用return语句直接返回。</li>
+<li>Go语言使用 defer 关键字简简单单地解决了这个问题，就比如一下的例子：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">func CopyFile(dst, src string) (w int64, err error) &#123;</span><br><span class="line">    srcFile, err :&#x3D; os.Open(src)</span><br><span class="line">    if err !&#x3D; nil &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    defer srcFile.Close()</span><br><span class="line">    </span><br><span class="line">    dstFile, err :&#x3D; os.Create(dstName)</span><br><span class="line">    if err !&#x3D; nil &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    defer dstFile.Close()</span><br><span class="line">    </span><br><span class="line">    return io.Copy(dstFile, srcFile)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;即使其中的Copy()函数抛出异常，Go仍然会保证dstFile和srcFile会被正常关闭。</span><br><span class="line">&#x2F;&#x2F;如果觉得一句话干不完清理工作，也可以使用在defer后加一个匿名函数的做法：</span><br><span class="line">defer func() &#123;</span><br><span class="line">    &#x2F;&#x2F; 做你的清理工作</span><br><span class="line">&#125; ()</span><br></pre></td></tr></table></figure></li>
+<li>defer语句的调用时遵循先进后出的原则，即最后一个defer语句将最先被执行。</li>
+</ul>
+<h4 id="panic-和recover"><a href="#panic-和recover" class="headerlink" title="panic()和recover()"></a>panic()和recover()</h4><ul>
+<li>Go语言引入了两个内置函数 panic() 和 recover() 以报告和处理运行时错误和程序中的错误场景：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func panic(interface&#123;&#125;)</span><br><span class="line">func recover() interface&#123;&#125;</span><br></pre></td></tr></table></figure></li>
+<li>当一个函数执行过程中调用panic()函数时，正常的函数执行流程将立即终止，但函数中之前==使用defer关键字延迟执行==的函数将正常展开执行，之后该函数将返回到调用函数，并导致逐层向上执行panic流程，直至所属的goroutinue中所有正在执行的函数被终止。错误信息将被报告，包括调用panic()函数时传入的参数，==这个过程称为错误处理流程。==</li>
+<li>从panic()的参数类型interface{}我们可以得知，该函数接收任意类型的数据，比如整型、字符型、对象等。调用方法很简单<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">panic(404)</span><br><span class="line">panic(&quot;network broken&quot;)</span><br><span class="line">panic(Error(&quot;file not exists&quot;))</span><br></pre></td></tr></table></figure></li>
+<li>recover() 函数用于终止错误处理流程。一般情况下，recover()应该在一个使用defer关键字的函数中执行以有效截取错误处理流程。如果没有在发生异常的goroutine中明确调用恢复过程（使用recover关键字），会导致该goroutine所属的进程打印异常信息后直接退出。</li>
+<li>==要点：==</li>
+<li><ol>
+<li>当panic发生之后，程序从正常的执行流程跳转到执行panic发生之前通过defer语句注册的defered函数，直到某个defered函数通过recover函数捕获了panic后再恢复正常的执行流程，如果没有recover则当所有的defered函数被执行完成之后结束程序；<ol start="2">
+<li>defer语句会被编译器翻译成对runtime包中deferproc()函数的调用，该函数会把defered函数打包成一个_defer结构体对象挂入goroutine对应的g结构体对象的_defer链表中，_defer对象除了保存有defered函数的地址以及该函数需要的参数外，还会分别把call deferproc指令的下一条指令的地址以及此时函数调用栈顶指针保存在_defer.pc和_defer.sp成员之中，用于recover时恢复程序的正常执行流程；</li>
+<li>当某个defered函数通过recover()函数捕获到一个panic之后，程序将从该defered函数对应的_defer结构体对象的pc成员所保存的指令地址处开始执行</li>
+<li>panic可以嵌套，当发生panic之后在执行defer函数时又发生了panic即为嵌套。每个还未被recover的panic都会对应着一个_panic结构体对象，它们会被依次挂入g结构体的_panic链表之中，最近一次发生的panic位于_panic链表表头，最早发生的panic位于链表尾。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/02/Qt%E6%8E%A7%E4%BB%B6/" rel="prev" title="Qt控件">
+      <i class="fa fa-chevron-left"></i> Qt控件
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/02/%E7%BD%91%E7%BB%9C/" rel="next" title="网络">
+      网络 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#顺序编程"><span class="nav-number">1.</span> <span class="nav-text">顺序编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">1.1.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#布尔类型"><span class="nav-number">1.1.1.</span> <span class="nav-text">布尔类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点型"><span class="nav-number">1.1.2.</span> <span class="nav-text">浮点型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复数类型"><span class="nav-number">1.1.3.</span> <span class="nav-text">复数类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">1.1.4.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符类型"><span class="nav-number">1.1.5.</span> <span class="nav-text">字符类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-number">1.1.6.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组切片"><span class="nav-number">1.1.7.</span> <span class="nav-text">数组切片</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建数组切片"><span class="nav-number">1.1.7.1.</span> <span class="nav-text">创建数组切片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元素遍历"><span class="nav-number">1.1.7.2.</span> <span class="nav-text">元素遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态增减元素"><span class="nav-number">1.1.7.3.</span> <span class="nav-text">动态增减元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于数组切片创建数组切片"><span class="nav-number">1.1.7.4.</span> <span class="nav-text">基于数组切片创建数组切片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内容复制"><span class="nav-number">1.1.7.5.</span> <span class="nav-text">内容复制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map"><span class="nav-number">1.1.8.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程控制"><span class="nav-number">1.1.9.</span> <span class="nav-text">流程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">1.1.10.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#不定参数"><span class="nav-number">1.1.10.1.</span> <span class="nav-text">不定参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误处理"><span class="nav-number">1.1.11.</span> <span class="nav-text">错误处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#error接口"><span class="nav-number">1.1.11.1.</span> <span class="nav-text">error接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#defer"><span class="nav-number">1.1.11.2.</span> <span class="nav-text">defer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#panic-和recover"><span class="nav-number">1.1.11.3.</span> <span class="nav-text">panic()和recover()</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="stt"
+      src="/images/head3.jpg">
+  <p class="site-author-name" itemprop="name">stt</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hustStt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hustStt" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:stthust@qq.com" title="E-Mail → mailto:stthust@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">stt</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

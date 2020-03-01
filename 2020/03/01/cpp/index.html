@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="C++ Note标准输入输出 输入输出能被操纵符格式化，除了setw，操纵符将永远地改变他所在应用到的输入输出流的状态，而setw的影响仅仅持续到下一个输入或输出操作。 带参数的setfill sew 需要头文件iomanip 填充字符一但设定，它的作用一直持续到重新设置为止。 setprecision用来定义浮点数的精度，默认值为6。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cpp">
+<meta property="og:url" content="http://yoursite.com/2020/03/01/cpp/index.html">
+<meta property="og:site_name" content="Lemon">
+<meta property="og:description" content="C++ Note标准输入输出 输入输出能被操纵符格式化，除了setw，操纵符将永远地改变他所在应用到的输入输出流的状态，而setw的影响仅仅持续到下一个输入或输出操作。 带参数的setfill sew 需要头文件iomanip 填充字符一但设定，它的作用一直持续到重新设置为止。 setprecision用来定义浮点数的精度，默认值为6。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-01T15:54:39.000Z">
+<meta property="article:modified_time" content="2020-03-01T15:58:58.408Z">
+<meta property="article:author" content="stt">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/01/cpp/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>cpp | Lemon</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lemon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/01/cpp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head3.jpg">
+      <meta itemprop="name" content="stt">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lemon">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cpp
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-01 23:54:39 / 修改时间：23:58:58" itemprop="dateCreated datePublished" datetime="2020-03-01T23:54:39+08:00">2020-03-01</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="C-Note"><a href="#C-Note" class="headerlink" title="C++ Note"></a>C++ Note</h1><h2 id="标准输入输出"><a href="#标准输入输出" class="headerlink" title="标准输入输出"></a>标准输入输出</h2><ul>
+<li>输入输出能被操纵符格式化，除了setw，操纵符将永远地改变他所在应用到的输入输出流的状态，而setw的影响仅仅持续到下一个输入或输出操作。</li>
+<li>带参数的setfill sew 需要头文件iomanip</li>
+<li>填充字符一但设定，它的作用一直持续到重新设置为止。</li>
+<li>setprecision用来定义浮点数的精度，默认值为6。</li>
+</ul>
+<a id="more"></a>
+
+<table>
+<thead>
+<tr>
+<th>操纵符</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dec</td>
+<td align="center">十进制</td>
+</tr>
+<tr>
+<td>hex</td>
+<td align="center">十六进制</td>
+</tr>
+<tr>
+<td>otc</td>
+<td align="center">八进制</td>
+</tr>
+<tr>
+<td>endl</td>
+<td align="center">换行并刷新输出流</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td align="center">用定点符号表示浮点数d.dd</td>
+</tr>
+<tr>
+<td>flush</td>
+<td align="center">刷新输出流</td>
+</tr>
+<tr>
+<td>right</td>
+<td align="center">右对齐</td>
+</tr>
+<tr>
+<td>left</td>
+<td align="center">左对齐</td>
+</tr>
+<tr>
+<td>setw(n)</td>
+<td align="center">设置字段位数为n</td>
+</tr>
+<tr>
+<td>ws</td>
+<td align="center">删除空白</td>
+</tr>
+<tr>
+<td>boolalpha</td>
+<td align="center">输出bool变量格式</td>
+</tr>
+</tbody></table>
+<h2 id="输入输出到文件"><a href="#输入输出到文件" class="headerlink" title="输入输出到文件"></a>输入输出到文件</h2><ul>
+<li>头文件 并不需要包含iostream，不需要标准输入输出进行读写。头文件应包含fstream</li>
+<li>定义一个ifstream类型的变量来读文件，ofstream类型的变量来写文件。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ifstream infile;</span><br><span class="line">ofstream outfile;</span><br><span class="line">infile.open(&quot;xxxx&quot;);</span><br><span class="line">outfile.open(&quot;xxxx&quot;);</span><br><span class="line"></span><br><span class="line">infile &gt;&gt; ---;</span><br><span class="line">outfile &lt;&lt; ---;</span><br><span class="line"></span><br><span class="line">infile.close();</span><br><span class="line">outfile.close();</span><br></pre></td></tr></table></figure>
+
+<h2 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h2><ul>
+<li>C++增加了4种新类型的强制类型转换：<blockquote>
+<p>static_cast &emsp; const_cast &emsp; dynamic_cast &emsp; reinterpret_cast</p>
+</blockquote>
+</li>
+</ul>
+<ol>
+<li><p>static_cast</p>
+<p> static_cast是最常用的强制类型转换，它经常用来将一个数据类型转换到另一种数据类型并使用任何合理的转换方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;int -&gt; float</span><br><span class="line">&#x2F;&#x2F;C语言</span><br><span class="line">(float)count;</span><br><span class="line">&#x2F;&#x2F;C++</span><br><span class="line">static_cast&lt;float&gt;count;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>const_cast</p>
+</li>
+</ol>
+<p>const_cast用来强制去掉常数性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const int * p;</span><br><span class="line">int * ptr;</span><br><span class="line">ptr &#x3D; const_cast&lt;int *&gt; p;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>reinterpret_cast</p>
+<p> reinterpret_cast可用来改变指针类型，或将一个指针类型转变为整型以及将整型转呗为指针类型。</p>
+</li>
+</ol>
+<h2 id="string类型"><a href="#string类型" class="headerlink" title="string类型"></a>string类型</h2><ul>
+<li>string s(5,’x’); -&gt; s = “xxxxx”;</li>
+<li>str.c_str 返回一个指向const的null结尾的char类型数组的指针。</li>
+<li>修改字符串</li>
+</ul>
+<p>删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s.erase(); &#x2F;&#x2F;删除全部</span><br><span class="line">s.erase(2); &#x2F;&#x2F;删除第三个字符及以后的字符</span><br><span class="line">s.erase(2,3); &#x2F;&#x2F;删除第三个字符开始的3个字符</span><br></pre></td></tr></table></figure>
+
+<p>插入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s1.insert(4,s2);</span><br></pre></td></tr></table></figure>
+
+<p>替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s1.replace(4,6,s2);</span><br></pre></td></tr></table></figure>
+
+<p>交换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s1.swap(s2);</span><br></pre></td></tr></table></figure>
+
+<p>提取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s2 &#x3D; s1.substr(4,6);</span><br></pre></td></tr></table></figure>
+
+<p>查找</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">s1.find(s2,int);</span><br><span class="line">&#x2F;&#x2F;s1中从int开始找s2</span><br><span class="line">&#x2F;&#x2F;返回大于或等于int的索引值，没找到则返回无穷大（-1？）</span><br><span class="line">s1.rfind(s2,int);</span><br><span class="line">&#x2F;&#x2F;返回小于或等于int的索引值或为无穷大。参数s2没有给出则默认值为无穷大。</span><br><span class="line">s1.find_first_of(s2);</span><br><span class="line">&#x2F;&#x2F;返回s1和s2都具有的第一个字符的索引，不成功则返回无穷大。</span><br><span class="line">&#x2F;&#x2F;s2可以是string或者一个char字符</span><br></pre></td></tr></table></figure>
+
+<h2 id="编程错误"><a href="#编程错误" class="headerlink" title="编程错误"></a>编程错误</h2><ul>
+<li>操作符&lt;&lt;的优先级比关系、比较、逻辑和赋值操作符高。</li>
+<li>混用C和C++的输入输出功能，可能会导致不可预料的错误，使用函数ios：：sync_with_stdio()可以消除这种隐患。</li>
+<li>s1 = “W. C. “ + “Fields”;//ERROR</li>
+<li>s1 = ‘W’ + s3;//OK</li>
+<li>关键字inline用于函数声明而不是函数定义。</li>
+<li>默认参数应在函数声明而非函数定义中给出。</li>
+<li>函数的返回值不是函数签名的一部分。</li>
+</ul>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><ul>
+<li>一个空类的大小理论上为0，但是由于可以实例化，实例化必然在内存中占有一个位置，因此，编译器为其优化为一个字节大小。一般8字节对齐。</li>
+<li>在C++中，用关键字class声明的类，其类的成员默认情况下具有类范围性质，没有为类成员指定任何访问限制符，这个成员将作为私有成员处理。</li>
+<li>struct默认是共有的。</li>
+<li>一个const成员函数仅能调用其他const成员函数。const成员函数不能直接或间接改变对象的状态。</li>
+<li>time_t time(time_t* ptr);</li>
+<li>char* ctime( const time_t* ptr);<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3></li>
+<li>构造函数不能有返回值</li>
+<li>可以对构造函数进行重载</li>
+<li>多数情况下，编译器为类生成一个公有的默认构造函数，只有下面两种情况例外。</li>
+</ul>
+<ol>
+<li>一个类显式声明了<em>任何</em>构造函数，编译器不会生成公有的默认他构造函数。如需要，则由类的设计者提供。</li>
+<li>一个类声明了一个非公有的默认构造函数，编译器不生成公有的默认构造函数</li>
+</ol>
+<ul>
+<li>构造函数<ul>
+<li>默认构造函数 C()</li>
+<li>带参构造函数<ul>
+<li>拷贝构造函数 C(C&amp;)</li>
+<li>转型构造函数 </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>如果类的设计者不提供拷贝构造函数，编译器会自动生成一个。将源对象所有数据成员的值逐一赋值给目标对象相应的数据成员。</li>
+<li>如果拷贝构造函数是私有的，顶层函数和其他类的成员函数就不能通过传值来传递和返回该类的对象，因为这两个操作都需要调用拷贝构造函数。</li>
+<li>转型构造函数与隐式类型转换</li>
+<li>声明为explicit 不隐藏</li>
+<li>初始化const类型数据成员的唯一方法是 初始化列表</li>
+<li>C++操作符new和new[]比C函数malloc和calloc做的更好，因为操作符new和new[]在分配存储空间的同时，还会调用相应的构造函数，而malloc和calloc无法完成这个任务。<h3 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h3>对象的摧毁出现在如下两种情况：</li>
+<li>以某个类作为数据类型的变量超出其作用范围。</li>
+<li>用delete操作符删除动态分配的对象。</li>
+</ul>
+<p>析构函数不带参数，因此不能被重载，这样，每个类只能拥有一个析构函数。</p>
+<ul>
+<li>不管是在栈上的对象，还是全局/静态区的对象，都遵循这样的顺序：越是先产生的对象越是后被销毁.<h3 id="类数据成员和类成员函数"><a href="#类数据成员和类成员函数" class="headerlink" title="类数据成员和类成员函数"></a>类数据成员和类成员函数</h3></li>
+<li>类成员：属于类本身，而不属于类的对象，我们称之为类成员（class member）</li>
+<li>属于对象的成员成为对象成员（object member）或者实例成员（instance member）</li>
+<li>static数据成员在类声明的内部声明，同时static数据成员还需要进行定义。</li>
+<li>在所有程序块之外定义的任何变量都将自动初始化为0；</li>
+<li>static数据成员不会影响类及其他对象的sizeof</li>
+<li>静态成员函数只能访问其他的static成员，包括数据成员和成员函数。</li>
+<li>static成员函数既可以是inline函数，也可以是非inline函数。</li>
+<li>访问static成员的首选方法是通过类直接访问。static成员毕竟是与类本身相关联。<h3 id="在成员函数内定义static变量"><a href="#在成员函数内定义static变量" class="headerlink" title="在成员函数内定义static变量"></a>在成员函数内定义static变量</h3></li>
+<li>成员函数内的局部变量可以是static的。如果将成员函数内的某个及局部变量定义为静态变量，所有对象在调用这个成员函数时，将共享这个变量。<h3 id="常量指针this"><a href="#常量指针this" class="headerlink" title="常量指针this"></a>常量指针this</h3></li>
+<li>在成员函数内部可以用指针常量this来访问与成员函数的调用相关联的对象。</li>
+<li>this指针是一个常量，它不能作为赋值、递增、递减等运算的目标对象。</li>
+<li>此外this只在非static成员函数中用才有效。、<h3 id="常见编程错误"><a href="#常见编程错误" class="headerlink" title="常见编程错误"></a>常见编程错误</h3></li>
+<li>在类声明的最后遗漏了一个分号。</li>
+<li>关键字inline只能出现在该函数的声明中。</li>
+<li>在类C的构造函数中错误地使用单一的C类型参数：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class C&#123;</span><br><span class="line">    public:</span><br><span class="line">        C(C obj); &#x2F;&#x2F;error</span><br><span class="line">        C(C obj, int n);&#x2F;&#x2F;ok</span><br><span class="line">        &#x2F;&#x2F;...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>一个static数据成员在类的声明内被声明，错误地将static数据成员定义在程序块内：</li>
+<li>在static成员函数中使用this。</li>
+</ul>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><ul>
+<li>新类GradStudent叫做派生类或Student的子类。原有的Student类称为基类或GradStudent的超类。</li>
+<li>派生类GradStudent继承了Student类的所有成员函数和数据成员（构造函数、析构函数和操作符重载函数除外）。</li>
+<li>当一个类通过公有继承方式从基类继承时，基类中的公有成员在派生类中也是公有的。</li>
+<li>不指明继承方式关键字public时，编译器会默认继承方式为private或protected。</li>
+<li>基类的所有私有成员仅在基类中可见，而在派生类中不可见。基类的私有成员可以由派生类继承，但在派生类中==不可见==。</li>
+<li>使用==using==声明可以改变成员在派生类中的访问权限。例如，基类中的公有成员一般情况下被继承为公有成员，但使用using声明可以将其改为私有成员（或保护成员）。</li>
+<li>可以通过using声明将不符合的成员函数在派生类中隐藏起来。</li>
+<li>==名字隐藏==： 如果派生类添加了一个数据成员，而该成员与基类中的某个数据成员同名，新的数据成员就隐藏了继承来的同名成员。</li>
+<li>==间接继承==： 数据成员和成员函数可以沿着继承链路来继承，继承链路包括了基类及所有派生类。</li>
+<li>==保护成员== </li>
+<li>==类的私有成员==可以被类自身的成员和友元访问，但不能被包括派生类在内的其他任何类和任何普通函数访问。</li>
+<li>==类的保护成员==除了可以被类自身的成员和友元访问外，还可以被派生类的函数访问，但是，类的保护成员不能被任何非友元的普通函数访问。</li>
+<li>==类的公有成员==可以被任何普通函数和任何函数成员访问。</li>
+<li>由此可知，派生类函数成员可以访问基类的保护成员和公有成员。除非定义为基类的成员友元，否则派生类函数成员不能访问基类的私有函数。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">基类成员\派生控制</th>
+<th align="center">private</th>
+<th align="center">protected</th>
+<th align="center">public</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">protected</td>
+<td align="center">private</td>
+<td align="center">protected</td>
+<td align="center">protected</td>
+</tr>
+<tr>
+<td align="center">public</td>
+<td align="center">private</td>
+<td align="center">protected</td>
+<td align="center">public</td>
+</tr>
+</tbody></table>
+<h3 id="继承机制下的构造函数与析构函数"><a href="#继承机制下的构造函数与析构函数" class="headerlink" title="继承机制下的构造函数与析构函数"></a>继承机制下的构造函数与析构函数</h3><ul>
+<li>当创建一个派生类对象时，基类的构造函数被自动调用，用来对派生类对象中的基类部分进行初始化，并完成其他一些相关事务。</li>
+<li>如果派生类定义了自己的构造函数，则由该构造函数负责对象中“派生类添加部分”的初始化工作。</li>
+<li>如果基类拥有构造函数但没有默认构造函数，那么派生类的构造函数必须显式地调用基类的某个构造函数。</li>
+<li>也就是说派生类没有显式调用基类的某个构造函数的话就会调用默认构造函数（如果有的话，没有就会出错）。避免出现问题，建议为每个基类都设计一个默认构造函数。</li>
+<li>在类的层次结构中，构造函数按基类到派生类的次序执行，西沟函数则按派生类到基类的次序执行，因此，析构函数的执行次序和构造函数的执行次序式相反的。</li>
+</ul>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><ul>
+<li>多态就是将函数名称动态地绑定到函数入口地址的运行期绑定机制。</li>
+<li>如果对一个函数的绑定发生在运行时刻而非编译时刻，我们就称该函数是多态的。</li>
+<li>C++中的多态有以下三个前提条件：<ul>
+<li>必须存在一个继承体系结构</li>
+<li>继承体系结构中的一些类必须具有同名（相同函数签名）的virtual成员函数。</li>
+<li>至少有一个基类类型的指针或基类类型的引用。这个指针或引用可用来对virtual成员函数进行调用。</li>
+</ul>
+</li>
+<li>基类类型的指针可以只想任何基类对象或派生类对象。</li>
+<li>当声明了基类的一个成员函数为虚函数后，那么即使该成员函数没有在派生类中被显式地声明为虚函数，但它在所有派生类中也将自动成为虚函数。</li>
+<li>如果虚函数在类声明之外定义，关键字virtual仅在函数声明时需要，不需要在函数定义中使用virtual关键字。</li>
+<li>使用动态绑定的程序会影响效率，因为虚成员函数表需要额外的空间。</li>
+<li>纯面向对象语言由于所有的函数都以动态方式运行，因而效率的降低会相当大。</li>
+<li>构造函数不能是虚成员函数，但析构函数可以是虚成员函数。<h3 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h3></li>
+<li>析构函数的调用时沿着继承树自下向上延伸的。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class A&#123;</span><br><span class="line">public:</span><br><span class="line">    A()&#123;&#125;;</span><br><span class="line">    ~A()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">class Z : public A&#123;</span><br><span class="line">public:</span><br><span class="line">    Z()&#123;&#125;;</span><br><span class="line">    ~Z()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void f()&#123;</span><br><span class="line">   A* ptr;</span><br><span class="line">   ptr &#x3D; new Z();&#x2F;&#x2F;A()  Z()</span><br><span class="line">   delete ptr;&#x2F;&#x2F;这里调用的是~A()</span><br><span class="line">   &#x2F;&#x2F;也就是说没有调用~Z() 导致内存没有释放</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>这是因为编译器实施的是静态绑定。编译器根据ptr的数据类型A*来决定调用哪一个析构函数，因此仅调用了<del>A()没有调用</del>Z()。</li>
+</ul>
+<h3 id="对象成员函数和类成员函数"><a href="#对象成员函数和类成员函数" class="headerlink" title="对象成员函数和类成员函数"></a>对象成员函数和类成员函数</h3><ul>
+<li>只有非静态成员函数才可以是虚成员函数，换句话说，只有对象成员函数才可以是虚成员函数。</li>
+</ul>
+<h3 id="重载、覆盖和遮蔽"><a href="#重载、覆盖和遮蔽" class="headerlink" title="重载、覆盖和遮蔽"></a>重载、覆盖和遮蔽</h3><p>在C++中，仅有虚函数是在运行期进行动态绑定的，因此仅有虚函数才具有真正意义上的多态。<br>编译器多态机制和运行期多态机制之间的区别。</p>
+<ol>
+<li>重载</li>
+</ol>
+<ul>
+<li>重载与编译器绑定相对应，不管是成员函数还是顶层函数。</li>
+</ul>
+<ol start="2">
+<li>覆盖</li>
+</ol>
+<p>满足以下条件：</p>
+<ul>
+<li>发生覆盖的函数必须分别在父类和子类中。</li>
+<li>子类函数与父类函数的函数签名相同</li>
+<li>父类函数必须是虚函数</li>
+</ul>
+<ol start="3">
+<li>遮蔽（隐藏）</li>
+</ol>
+<p>遮蔽是指子类中具有与父类同名的函数（不管参数列表是否相同），除去函数覆盖的情况。</p>
+<p>遮蔽的条件：</p>
+<ul>
+<li>子类的成员函数与父类的成员函数名必须相同</li>
+<li>子类的虚函数无法覆盖父类的虚函数（虚函数遮蔽）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"> 1 #include&lt;iostream&gt;</span><br><span class="line"> 2 </span><br><span class="line"> 3 using namespace std;</span><br><span class="line"> 4 </span><br><span class="line"> 5 class A&#123;</span><br><span class="line"> 6 public:</span><br><span class="line"> 7     A()&#123;a &#x3D; 1;cout&lt;&lt;&quot;A&quot;&lt;&lt;endl;&#125;;</span><br><span class="line"> 8     virtual void func()&#123;</span><br><span class="line"> 9         cout&lt;&lt;a&lt;&lt;endl;</span><br><span class="line">10     &#125;</span><br><span class="line">11     virtual void func2()&#123;cout&lt;&lt;&quot;funcA&quot;&lt;&lt;endl;&#125;;</span><br><span class="line">12     virtual ~A()&#123;cout&lt;&lt;&quot;~A&quot;&lt;&lt;endl;&#125;;</span><br><span class="line">13     void func3()&#123;cout&lt;&lt;&quot;func3A&quot;&lt;&lt;endl;&#125;;</span><br><span class="line">14 private:</span><br><span class="line">15     int a;</span><br><span class="line">16 &#125;;</span><br><span class="line">17 </span><br><span class="line">18 class Z : public A&#123;</span><br><span class="line">19 public:</span><br><span class="line">20     Z()&#123;b &#x3D; 2;cout&lt;&lt;&quot;Z&quot;&lt;&lt;endl;&#125;;</span><br><span class="line">21     virtual ~Z()&#123;cout&lt;&lt;&quot;~Z&quot;&lt;&lt;endl;&#125;;</span><br><span class="line">22     void func()&#123;</span><br><span class="line">23         cout&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">24     &#125;</span><br><span class="line">25    void func2()&#123;cout&lt;&lt;&quot;funcZ&quot;&lt;&lt;endl;&#125;;</span><br><span class="line">26    void func2(int a)&#123;cout&lt;&lt;&quot;funcZ&quot;&lt;&lt;a&lt;&lt;endl;&#125;;</span><br><span class="line">27    &#x2F;&#x2F;void func3(int b)&#123;cout&lt;&lt;&quot;func3Z&quot;&lt;&lt;endl;&#125;;</span><br><span class="line">28 private:</span><br><span class="line">29         int b;</span><br><span class="line">30 &#125;;</span><br><span class="line">31 </span><br><span class="line">32 void f()&#123;</span><br><span class="line">33    A* ptr;</span><br><span class="line">34    Z* ptr2;</span><br><span class="line">35    ptr2 &#x3D; new Z();&#x2F;&#x2F;A()  Z()</span><br><span class="line">36    ptr &#x3D; ptr2;</span><br><span class="line">37    &#x2F;&#x2F;delete ptr;&#x2F;&#x2F;如果不是虚析构函数这里调用的是~A()</span><br><span class="line">38    &#x2F;&#x2F;也就是说没有调用~Z() 导致内存没有释放</span><br><span class="line">39    ptr-&gt;func();&#x2F;&#x2F;多态 发生了覆盖 函数签名相同</span><br><span class="line">40    ptr-&gt;func2();&#x2F;&#x2F;多态</span><br><span class="line">41    &#x2F;&#x2F;发生了遮蔽 虚函数遮蔽 只是函数名相同参数列表必须不同</span><br><span class="line">42    ptr2-&gt;func2(1);&#x2F;&#x2F;如果只是返回值类型不同，则会编译错误 其实感觉就是重载emmm</span><br><span class="line">43    ptr2-&gt;func3();</span><br><span class="line">44    cout&lt;&lt;sizeof(*ptr)&lt;&lt;endl;</span><br><span class="line">45    cout&lt;&lt;sizeof(*ptr2)&lt;&lt;endl;</span><br><span class="line">46    delete ptr;</span><br><span class="line">47 &#125;</span><br><span class="line">48 </span><br><span class="line">49 int main()&#123;</span><br><span class="line">50     f();</span><br><span class="line">51     return 0;</span><br><span class="line">52 &#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A</span><br><span class="line">Z</span><br><span class="line">2</span><br><span class="line">funcZ</span><br><span class="line">funcZ1</span><br><span class="line">func3A</span><br><span class="line">16</span><br><span class="line">16</span><br><span class="line">~Z</span><br><span class="line">~A</span><br></pre></td></tr></table></figure>
+
+<h3 id="抽象基类和纯虚成员函数"><a href="#抽象基类和纯虚成员函数" class="headerlink" title="抽象基类和纯虚成员函数"></a>抽象基类和纯虚成员函数</h3><p>抽象基类之所以是抽象的，是因为不能实例化抽象基类的对象，抽象基类可以用来指明某些必须在派生类覆盖的虚函数，如果这些派生类想要拥有对象的话。只有符合下面条件的类才可以称为抽象基类：</p>
+<ul>
+<li>类必须拥有一个纯虚成员函数</li>
+</ul>
+<p>在纯虚成员函数声明的结尾加上=0就可将这个函数定义为纯虚成员函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class ABC&#123;</span><br><span class="line">public:</span><br><span class="line">    virtual coid open() &#x3D; 0;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ABC obj;    &#x2F;&#x2F;*******ERROR: ABC is an abstract clss</span><br></pre></td></tr></table></figure>
+<p>虽然不能创建一个抽象基类的对象，但抽象基类可以拥有派生类，从抽象基类派生来的类必须覆盖基类的所有纯虚成员函数，==否则派生类也成为抽象类==，因而也不能用来创建对象。</p>
+<ul>
+<li>只有虚函数才可以称为虚成员函数，非虚函数或顶层函数都不能声明为虚成员函数。</li>
+<li>抽象基类实际上定义了一个公共接口，这个接口被所有从抽象基类派生的类共享。</li>
+<li>因为抽象基类通常只有public成员函数，所以经常使用关键字struct赖生明抽象基类。</li>
+</ul>
+<h3 id="运行期类型识别"><a href="#运行期类型识别" class="headerlink" title="运行期类型识别"></a>运行期类型识别</h3><ul>
+<li>在运行期对类型转换操作进行检查</li>
+<li>在运行期确定对象的类型</li>
+<li>扩展C++提供的RTTI</li>
+</ul>
+<p>dynamic_cast操作符</p>
+<p>在C++中，编译器合法的类型转换操作可能会在运行期引发错误，当转型操作涉及对象指针或引用时，更易发生错误。使用dynamic_cast操作符可用来在运行期对可疑的转型操作进行测试。</p>
+<ul>
+<li>dynamic_cast 仅对多态类型有效。</li>
+</ul>
+<h3 id="typeid操作符"><a href="#typeid操作符" class="headerlink" title="typeid操作符"></a>typeid操作符</h3><ul>
+<li>操作符typeid可以用来确定某个表达式的类型，要使用这个操作符，必须包含头文件typeinfo，例如，typeid操作符可用作C++的内建数据类型。</li>
+<li>typeid不能针对非多态类型进行运行期类型检查。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">daibu</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="操作符重载"><a href="#操作符重载" class="headerlink" title="操作符重载"></a>操作符重载</h2><p>重载指的是相同的名称或符号具有不同的意义。一个重载的函数，就是一个被定义多次的函数。操作符重载也就是对+、++和[]等这样的操作符进行重新定义。</p>
+<ul>
+<li>操作符()是函数调用操作符。</li>
+<li>成员选择符(.)、成员对象选择符(.*)、域解析操作符(::)和条件操作符(?:)不能被重载。</li>
+<li>除了复制操作符(=)之外，基类中所有被重载的操作符都将被派生类继承。</li>
+<li>重载一个二元操作符，则操作符重载函数只有一个参数。如果我们要重载一个一元操作符，其函数不需要任何操作符。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class OPair&#123;</span><br><span class="line">public:</span><br><span class="line">    &#x2F;&#x2F;....</span><br><span class="line">    bool operator&#x3D;&#x3D;( const OPair&amp;) const;</span><br><span class="line">    &#x2F;&#x2F;....</span><br><span class="line">&#125;;</span><br><span class="line">&#x2F;&#x2F;第一个const表示参数不会被改变。</span><br><span class="line">&#x2F;&#x2F;第二个const表示调用operator&#x3D;&#x3D;的对象不会改变。</span><br></pre></td></tr></table></figure></li>
+<li>重载不能改变操作符的优先级和语法。 </li>
+</ul>
+<h3 id="用顶层函数进行操作符重载"><a href="#用顶层函数进行操作符重载" class="headerlink" title="用顶层函数进行操作符重载"></a>用顶层函数进行操作符重载</h3><ul>
+<li>除了内存管理操作符new、new[]、delete和delete[]之外，一个以顶层函数形式被重载的操作符必须在它的参数表中包含一个类的对象。</li>
+<li>但下标操作符[]、赋值操作符=、函数调用操作符()和指针操作符-&gt;必须以类成员函数的形式进行重载。</li>
+<li>因为操作符以类成员函数的形式重载时，可以保证其第一个参数是类的对象，因而当x是一个类对象时，像9[x]和6.32 = x这样的表达式就不会被程序接受。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">C operator+( const C&amp; c1, const C&amp; c2)&#123;</span><br><span class="line">    &#x2F;&#x2F;....</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a &#x3D; operator+(b,c);</span><br><span class="line">a &#x3D; b + c;</span><br></pre></td></tr></table></figure></li>
+<li>与使用类成员函数重载二元操作符相比，只要定义了用于转型的构造函数，使用顶层函数进行重载的一个优点就是非对象操作数可以出现在操作符的左边。而使用类成员函数时，第一个操作数必须是类的对象。<h3 id="friend函数"><a href="#friend函数" class="headerlink" title="friend函数"></a>friend函数</h3>类的私有成员只能被该类的成员函数和该类的friend函数访问；类的保护成员只能被该类的或其派生类的成员函数和该类的friend函数访问。<br>为了使函数f成为类C的friend，我们在类C的声明里使用关键字friend对f进行声明：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class C&#123;</span><br><span class="line">    &#x2F;&#x2F;...</span><br><span class="line">    friend int f();</span><br><span class="line">    &#x2F;&#x2F;..</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+该声明的作用是赋予f访问类C的私有成员的权利，因为不是成员函数，该声明可以放在C中的private、protect或public的任意部分。</li>
+<li>从严格意义上来说，这不符合面向对象原则。因此friend函数建议仅在重载操作符时使用friend函数。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">istream&amp; operator&gt;&gt;(istream&amp; in,Complex&amp; c)&#123;</span><br><span class="line">   return in&gt;&gt;c.real&gt;&gt;c.imag; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="拷贝构造函数与赋值操作符重载"><a href="#拷贝构造函数与赋值操作符重载" class="headerlink" title="拷贝构造函数与赋值操作符重载"></a>拷贝构造函数与赋值操作符重载</h3><p>一般而言，拷贝构造函数会在以下三种情况下被使用：</p>
+<ol>
+<li>当构造一个新的对象时</li>
+<li>使用值传递来传递函数参数时</li>
+<li>函数的返回值</li>
+</ol>
+<ul>
+<li>当构造一个新的对象时，如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Object&#123;...&#125;;</span><br><span class="line">Object a;</span><br><span class="line">Object b &#x3D; a;&#x2F;&#x2F;此处调用的是拷贝构造函数</span><br><span class="line">Object c;</span><br><span class="line">c &#x3D; a; &#x2F;&#x2F;此处调用的是&quot;operator &#x3D; &quot;</span><br><span class="line">Object d(a); &#x2F;&#x2F;此处调用的是拷贝构造函数</span><br></pre></td></tr></table></figure></li>
+<li>使用值传递来传递函数参数，如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Object&#123;...&#125;;</span><br><span class="line"></span><br><span class="line">int Function_A(Object param);</span><br><span class="line">Object a;</span><br><span class="line">Function_A(a);</span><br><span class="line">&#x2F;&#x2F;在调用Function_A的时候，在函数内部使用a的拷贝构造函数来获取a的副本来进行函数的处理。</span><br></pre></td></tr></table></figure></li>
+<li>函数的返回值，如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Object&#123;...&#125;;</span><br><span class="line"></span><br><span class="line">Object GetObject()</span><br><span class="line">&#123;</span><br><span class="line">    Object a;</span><br><span class="line">    return a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>拷贝构造函数将一个对象拷贝到另一个新的对象；赋值操作符将一个对象拷贝到另一个已经存在的对象。<br>如果类的作者没有提供拷贝构造函数，也没有重载赋值操作符，编译器将会给这个类提供一个拷贝构造函数和一个赋值操作符。运作机制：将源对象中的每个数据成员拷贝到目标对应的数据成员中。</p>
+<h3 id="自增与自减操作符重载"><a href="#自增与自减操作符重载" class="headerlink" title="自增与自减操作符重载"></a>自增与自减操作符重载</h3><ul>
+<li>由于编译器必须能够识别出前缀自增与后缀自增，故人为规定了用一个 int 区分，并没有实际的含义。</li>
+<li>operator++(); 重载了前置自增操作符</li>
+<li>operator++(int); 重载了后置自增操作符</li>
+</ul>
+<h3 id="转型操作符"><a href="#转型操作符" class="headerlink" title="转型操作符"></a>转型操作符</h3><ul>
+<li>operator othertype();</li>
+</ul>
+<h3 id="内存管理操作符"><a href="#内存管理操作符" class="headerlink" title="内存管理操作符"></a>内存管理操作符</h3><ul>
+<li>new new[] delete delete[]既可以用成员函数也可以用顶层函数重载。</li>
+<li>new操作符的重载方式有两种：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void* C::operator new( size_t size)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void* operator new(size_t size)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>C::new的调用方式为 C* c1 = new C;<br>系统调用了重载的C::new操作符，如果没有定义这个操作符，系统就会调用內建的new操作符。</li>
+<li>delete操作符的重载方式也有两种：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void C::operator delete(void* objPtr)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void operator delete(void* objPtr)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>两种重载函数均返回void，并且第一个参数必须是void*类型，用来指向需释放的空间。C::delete的调用方式如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C* c1 &#x3D; new C;</span><br><span class="line">&#x2F;&#x2F;...</span><br><span class="line">delete c1;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<hr>
+<ul>
+<li>赋值操作符是唯一不会被继承的操作符。</li>
+<li>重载&gt;&gt;操作符用于输入时，对象必须以引用的形式传入，因为输入的数据将被写入对象，而不是对象的拷贝。因此，以下代码是错误的：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">istream&amp; operator&gt;&gt;( istream&amp; in, Complex c)&#123;</span><br><span class="line">    return in&gt;&gt; c.read&gt;&gt;c.imag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+正确的写法是：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">istream&amp; operator&gt;&gt;( istream&amp; in,Complex&amp; c)&#123;</span><br><span class="line">    return in&gt;&gt; c.read&gt;&gt;c.imag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/01/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/01/JavaNote/" rel="next" title="JavaNote">
+      JavaNote <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-Note"><span class="nav-number">1.</span> <span class="nav-text">C++ Note</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准输入输出"><span class="nav-number">1.1.</span> <span class="nav-text">标准输入输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出到文件"><span class="nav-number">1.2.</span> <span class="nav-text">输入输出到文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强制类型转换"><span class="nav-number">1.3.</span> <span class="nav-text">强制类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string类型"><span class="nav-number">1.4.</span> <span class="nav-text">string类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编程错误"><span class="nav-number">1.5.</span> <span class="nav-text">编程错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类"><span class="nav-number">1.6.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数"><span class="nav-number">1.6.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#析构函数"><span class="nav-number">1.6.2.</span> <span class="nav-text">析构函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类数据成员和类成员函数"><span class="nav-number">1.6.3.</span> <span class="nav-text">类数据成员和类成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在成员函数内定义static变量"><span class="nav-number">1.6.4.</span> <span class="nav-text">在成员函数内定义static变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常量指针this"><span class="nav-number">1.6.5.</span> <span class="nav-text">常量指针this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见编程错误"><span class="nav-number">1.6.6.</span> <span class="nav-text">常见编程错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承"><span class="nav-number">1.7.</span> <span class="nav-text">继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#继承机制下的构造函数与析构函数"><span class="nav-number">1.7.1.</span> <span class="nav-text">继承机制下的构造函数与析构函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态"><span class="nav-number">1.8.</span> <span class="nav-text">多态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚析构函数"><span class="nav-number">1.8.1.</span> <span class="nav-text">虚析构函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象成员函数和类成员函数"><span class="nav-number">1.8.2.</span> <span class="nav-text">对象成员函数和类成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重载、覆盖和遮蔽"><span class="nav-number">1.8.3.</span> <span class="nav-text">重载、覆盖和遮蔽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象基类和纯虚成员函数"><span class="nav-number">1.8.4.</span> <span class="nav-text">抽象基类和纯虚成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行期类型识别"><span class="nav-number">1.8.5.</span> <span class="nav-text">运行期类型识别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#typeid操作符"><span class="nav-number">1.8.6.</span> <span class="nav-text">typeid操作符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作符重载"><span class="nav-number">1.9.</span> <span class="nav-text">操作符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用顶层函数进行操作符重载"><span class="nav-number">1.9.1.</span> <span class="nav-text">用顶层函数进行操作符重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#friend函数"><span class="nav-number">1.9.2.</span> <span class="nav-text">friend函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拷贝构造函数与赋值操作符重载"><span class="nav-number">1.9.3.</span> <span class="nav-text">拷贝构造函数与赋值操作符重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自增与自减操作符重载"><span class="nav-number">1.9.4.</span> <span class="nav-text">自增与自减操作符重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转型操作符"><span class="nav-number">1.9.5.</span> <span class="nav-text">转型操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存管理操作符"><span class="nav-number">1.9.6.</span> <span class="nav-text">内存管理操作符</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="stt"
+      src="/images/head3.jpg">
+  <p class="site-author-name" itemprop="name">stt</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hustStt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hustStt" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:stthust@qq.com" title="E-Mail → mailto:stthust@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">stt</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
