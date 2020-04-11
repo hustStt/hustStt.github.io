@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="网络相关网卡名称 如果是复制的虚拟机，经常会出现网卡名称不为eth0的情况，那么如何修改网卡名称呢。   可以通过删除 70‐persistent‐net.rules 文件来实现。  12rm &#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;70‐persistent‐net.rulesreboot   修改 70‐persistent‐net.rules 文件。">
+  <meta name="description" content="记录一下CAP的理解 首先在CAP理论中，C代表一致性，A代表可用性（在一定时间内，用户的请求都会得到应答），P代表分区容忍性。网上的博客各有各的说法，我也不知道哪个是对的，暂时总结一下自己的理解。   分区容忍性。比较难理解的可能是这个P，也就是分区容忍性，在分布式系统中，分区容忍性是必须满足的，从而CAP只能满足CP或者AP。 为什么说分区容忍性是必须满足的呢，首先要理解他的意思，分区容忍性一">
 <meta property="og:type" content="article">
-<meta property="og:title" content="网络">
-<meta property="og:url" content="http://yoursite.com/2020/03/02/%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:title" content="CAP">
+<meta property="og:url" content="http://yoursite.com/2020/04/11/CAP/index.html">
 <meta property="og:site_name" content="Lemon">
-<meta property="og:description" content="网络相关网卡名称 如果是复制的虚拟机，经常会出现网卡名称不为eth0的情况，那么如何修改网卡名称呢。   可以通过删除 70‐persistent‐net.rules 文件来实现。  12rm &#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;70‐persistent‐net.rulesreboot   修改 70‐persistent‐net.rules 文件。">
+<meta property="og:description" content="记录一下CAP的理解 首先在CAP理论中，C代表一致性，A代表可用性（在一定时间内，用户的请求都会得到应答），P代表分区容忍性。网上的博客各有各的说法，我也不知道哪个是对的，暂时总结一下自己的理解。   分区容忍性。比较难理解的可能是这个P，也就是分区容忍性，在分布式系统中，分区容忍性是必须满足的，从而CAP只能满足CP或者AP。 为什么说分区容忍性是必须满足的呢，首先要理解他的意思，分区容忍性一">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-03-01T16:01:05.000Z">
-<meta property="article:modified_time" content="2020-03-01T16:01:37.628Z">
+<meta property="article:published_time" content="2020-04-11T05:14:49.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:48:08.115Z">
 <meta property="article:author" content="stt">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/03/02/%E7%BD%91%E7%BB%9C/">
+<link rel="canonical" href="http://yoursite.com/2020/04/11/CAP/">
 
 
 <script id="page-configurations">
@@ -44,7 +44,7 @@
   };
 </script>
 
-  <title>网络 | Lemon</title>
+  <title>CAP | Lemon</title>
   
 
 
@@ -163,7 +163,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/02/%E7%BD%91%E7%BB%9C/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/11/CAP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head3.jpg">
@@ -176,7 +176,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          网络
+          CAP
         </h1>
 
         <div class="post-meta">
@@ -187,7 +187,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-03-02 00:01:05 / 修改时间：00:01:37" itemprop="dateCreated datePublished" datetime="2020-03-02T00:01:05+08:00">2020-03-02</time>
+              <time title="创建时间：2020-04-11 13:14:49 / 修改时间：15:48:08" itemprop="dateCreated datePublished" datetime="2020-04-11T13:14:49+08:00">2020-04-11</time>
             </span>
 
           
@@ -201,89 +201,49 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="网络相关"><a href="#网络相关" class="headerlink" title="网络相关"></a>网络相关</h2><h3 id="网卡名称"><a href="#网卡名称" class="headerlink" title="网卡名称"></a>网卡名称</h3><ul>
-<li>如果是复制的虚拟机，经常会出现网卡名称不为eth0的情况，那么如何修改网卡名称呢。</li>
+        <h2 id="记录一下CAP的理解"><a href="#记录一下CAP的理解" class="headerlink" title="记录一下CAP的理解"></a>记录一下CAP的理解</h2><ul>
+<li>首先在CAP理论中，C代表一致性，A代表可用性（在一定时间内，用户的请求都会得到应答），P代表分区容忍性。网上的博客各有各的说法，我也不知道哪个是对的，暂时总结一下自己的理解。</li>
 </ul>
 <ol>
-<li>可以通过删除 70‐persistent‐net.rules 文件来实现。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm &#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;70‐persistent‐net.rules</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>修改 70‐persistent‐net.rules 文件。</li>
-</ol>
-<ul>
-<li>如果网卡没有启动，使用命令：</li>
+<li>分区容忍性。比较难理解的可能是这个P，也就是分区容忍性，在分布式系统中，分区容忍性是必须满足的，从而CAP只能满足CP或者AP。<ul>
+<li>为什么说分区容忍性是必须满足的呢，首先要理解他的意思，分区容忍性一般指的是分布式系统中出现了Network Partition （而非节点 Crash），也就是出现了网络不好的情况导致整个分布式系统被分成了几个不同的分区（各个区之间网络可以互通）。 很显然网络肯定容易变成这样，所以P一定存在。</li>
+<li>造成的原因一般有很多，可能是网络不可达，也可能是拥塞太久。</li>
+<li>当你一个数据项只在一个节点中保存，那么分区出现后，和这个节点不连通的部分就访问不到这个数据了。这时分区就是无法容忍的。比如有ABCD四个节点，BCD是存储节点，A为客户端，某一时间出现分区，ABC在同一网络，D单独，那么此时就访问不到D中的数据了，也就分区不可容忍（其实就是满足了一致性，没有满足可用性）。</li>
+<li>那么怎么保证，或者说提高分区容忍性呢？可以把数据项复制到多个节点上，那么出现分区之后，这一数据项就可能分布到各个区里，容忍性就提高了（例如采用三副本）。</li>
+<li>好了，出现了多副本，坑就来了，肯定是需要要保证数据多副本的一致性的，保证一致性的时候又会对可用性产生影响，CA比较难以共存。</li>
+<li>在多副本的情况下，发生分区P，A和C是矛盾的，因为对于一致性，会保证各个节点的一致性，那么在网络恢复之前，写入就是不可能的，因为会破坏一致性，这样就导致了不可用。所以默认P存在的情况，A和C矛盾。</li>
+<li>也就是说AC在分布式系统中根本不用讨论，没太大意义，因为P必然存在，还容易让人不理解。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ip link set eth0 up</span><br><span class="line">&#x2F;&#x2F;down</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h2 id="配置IP地址"><a href="#配置IP地址" class="headerlink" title="配置IP地址"></a>配置IP地址</h2><ul>
-<li>ip address显示地址</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ip address add 192.168.1.1&#x2F;24 dev eth0 &#x2F;&#x2F;添加IP</span><br><span class="line">sudo ip address del 192.168.1.1&#x2F;24 dev eth0 &#x2F;&#x2F;删除IP</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>永久添加IP地址： 修改/etc/network.conf</li>
-</ul>
-<h2 id="增加路由"><a href="#增加路由" class="headerlink" title="增加路由"></a>增加路由</h2><ul>
-<li><p>ip route 显示路由</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ip route add &#123;NETWORK&#x2F;MASK&#125; via &#123;GATEWAYIP&#125;</span><br><span class="line"></span><br><span class="line">sudo ip route add 192.168.1.0&#x2F;24 dev eth0</span><br><span class="line">sudo ip route del 192.168.1.0&#x2F;24 dev eth0</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>增加默认路由</p>
+<li>可用性。指的是非故障的节点在合理的时间内返回合理的响应（不是错误和超时的响应）。对于可用性的话其实也是很容易理解错误的（裱一下百度百科，我看不懂）。</li>
+<li>一致性。对某个指定的客户端来说，读操作保证能返回最新的写操作结果。（本质上还是说的是各个节点的数据一致性）<ul>
+<li>首先对于单副本情况，不管什么时候一致性肯定是满足的，因为数据就一份，怎么返回都是最新的。此时出现了分区，导致部分节点不可达，请求失败或者等恢复之后才返回，不可保证可用性。此外，如果节点挂掉了，那么影响就更大了</li>
+<li>那么为了避免这种情况，搞了多副本,对于多副本，出现分区，那么肯定有一部分数据是不可达的，为了保证一致性，势必要等到网络恢复，再进行一致修改，那么这样就无法提供可用性了。如果直接进行修改呢？显然某个能连上的分区可能拥有所有需要的数据，进行crud显然是可以的，但是另一个分区的备份就还是旧的数据，无法提供一致性了（等网络恢复了 数据就不一致了）。</li>
+</ul>
 </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route add default via 192.168.0.196</span><br></pre></td></tr></table></figure>
-
-<h3 id="net方式-同时访问内外网"><a href="#net方式-同时访问内外网" class="headerlink" title="net方式 同时访问内外网"></a>net方式 同时访问内外网</h3><ul>
-<li>3台虚拟主机 PC1 PC2 PC3；对于PC1配置三个网卡eth0、eth1、eth2，eth0通过nat共享方式共享主机ip可以上网。eth1与PC2的eth0连接，eth2与PC3的eth0连接。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>主机</th>
-<th>网卡</th>
-<th>IP</th>
-<th>网关</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>PC1</td>
-<td>eth0</td>
-<td>—-</td>
-<td></td>
-</tr>
-<tr>
-<td>PC1</td>
-<td>eth1</td>
-<td>192.168.1.1/24</td>
-<td>—</td>
-</tr>
-<tr>
-<td>PC1</td>
-<td>eth1</td>
-<td>192.168.1.1/24</td>
-<td>—</td>
-</tr>
-<tr>
-<td>PC2</td>
-<td>eth0</td>
-<td>192.168.1.2/24</td>
-<td>192.168.1.1</td>
-</tr>
-<tr>
-<td>PC3</td>
-<td>eth0</td>
-<td>192.168.2.2/24</td>
-<td>192.168.2.1</td>
-</tr>
-</tbody></table>
+<li>此外，这里的数据一致性跟数据库事务的一致性意思是不一样的。</li>
+<li>另外HA，是High Available，是指高可用性集群，是保证业务连续性的有效解决方案，一般有两个或两个以上的节点，且分为活动节点及备用节点。（一般是说故障之后，可以用备份机提供服务，保证高可用）</li>
+</ol>
+<h2 id="Raft"><a href="#Raft" class="headerlink" title="Raft"></a>Raft</h2><p>1.Raft简介</p>
+<p>这里再说一下Raft。简单来说Raft是一套共识算法，解决分布式系统中多个副本的一致性问题，通过多副本来进行容错，以此在提高系统可用性。（说白了就是用最终一致来提高可用性的）</p>
+<p>2.Raft是怎么解决一致性问题的</p>
+<p>Raft将一致性问题分解为三个相对独立的子问题：</p>
 <ol>
-<li>配置好IP以及网关后，此时PC1与PC2、PC3可以ping通，但是PC2和PC3之间显然不能ping通。</li>
-<li>开启PC1的转发功能：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;1&quot; &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;ip_forward</span><br></pre></td></tr></table></figure></li>
-<li>转发开启后，3台主机可以互相通信。但此时PC2和PC3不能访问外网。可以通过NAT方式使得内网的2个网段均可上网。</li>
-<li>需要设置转发链（FORWARD）成可接受的（ACCEPT）目的地，因此所有通过主机的数据包将会被正确的处理。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br><span class="line">iptables -P INPUT ACCEPT</span><br><span class="line">iptables -P FORWARD ACCEPT</span><br><span class="line">iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE #打开NAT</span><br></pre></td></tr></table></figure>
+<li><p>Leader election</p>
+</li>
+<li><p>Log replication</p>
+</li>
+<li><p>Safety（leader变更时的安全性）</p>
 </li>
 </ol>
+<p>3.Raft的关键点（这里我直接copy一下网上的emmm）</p>
+<p>选举安全特性：Raft 协议保证了在任意一个term内，最多只有一个 leader，leader节点拥有所有已提交的日志。</p>
+<p>多数派副本间要么自己选为了leader，要么别人成了leader，要么没有选出leader。对于没有选出leader的情况，为了避免一直出现选不出leader的情况出现。Raft采用一种简单的方法：为每个Candidate的election timeout从150ms-300ms之间随机取分配一个值，那么第一个超时的Candidate就可以发起新一轮的选举，然后成为leader。</p>
+<p>日志匹配原则：Raft保证每个副本日志append的连续性；leader会为每个follower维护一个nextIndex，表示leader给各个follower发送的下一条log entry在log中的index。如果日志append的时候前一个日志还没有append，则必须等到前一个日志append后才能append。也就是说不同副本上相同index的日志，只要term相同，那么这两条日志必然相同，且这之前的日志必然也相同。</p>
+<p>Leader只附加原则：Raft中leader日志的commit也是连续的；只允许Leader commit当前term被majority append的log entry。如果当前term下存在之前term被majority append的log entry 未被commit的情况，需要等待commit之后当前term 的log entry 才能被commit。所以一条日志被提交，代表这条日志之前所有的日志都已被提交，一条日志可以被提交，代表之前所有的日志都可以被提交。</p>
+<p>满足以上3点才能保证Raft协议的正确性</p>
+<p>回头再深入理解一下raft吧，这里大概说一下他解决了什么问题emm，简单的说就是，1. 在出现节点挂掉的情况下，由于多副本，可以保证可用性的。2. 在出现分区的时候，可以有由存在大多数节点的分区来提供可用性，暂时不满足一致性，在结束之后，通过log同步，来达到一致性。3. 另外可以用raft的机制来完成数据迁移。</p>
+<p>当然raft还要保证一系列数据的问题emmm，看过论文都忘的差不多了。</p>
 
     </div>
 
@@ -299,13 +259,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/03/02/Golang/" rel="prev" title="Golang">
-      <i class="fa fa-chevron-left"></i> Golang
+    <a href="/2020/03/06/SmartPtr%E5%AE%9E%E7%8E%B0/" rel="prev" title="SmartPtr实现">
+      <i class="fa fa-chevron-left"></i> SmartPtr实现
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/03/06/SmartPtr%E5%AE%9E%E7%8E%B0/" rel="next" title="SmartPtr实现">
-      SmartPtr实现 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -365,7 +322,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络相关"><span class="nav-number">1.</span> <span class="nav-text">网络相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网卡名称"><span class="nav-number">1.1.</span> <span class="nav-text">网卡名称</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置IP地址"><span class="nav-number">2.</span> <span class="nav-text">配置IP地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增加路由"><span class="nav-number">3.</span> <span class="nav-text">增加路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#net方式-同时访问内外网"><span class="nav-number">3.1.</span> <span class="nav-text">net方式 同时访问内外网</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#记录一下CAP的理解"><span class="nav-number">1.</span> <span class="nav-text">记录一下CAP的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Raft"><span class="nav-number">2.</span> <span class="nav-text">Raft</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
